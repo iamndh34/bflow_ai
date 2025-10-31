@@ -2,11 +2,15 @@
 {% load i18n %}
 {% load static %}
 {% block header_block %}
-    {% include 'extends/chatbot/chatbot-popup.css' %}
+    <link rel="stylesheet" href="{% static 'assets/css/bflow_ai/chatbot-popup.css' %}">
 {% endblock %}
 {% block content %}
+    <script id="bai-script-url"
+            data-ask-demo-url="{% url 'BAIAskDemo' %}"
+    ></script>
     {% include 'extends/chatbot/chatbot-popup.html' %}
 {% endblock %}
 {% block js_block %}
+    <script src="{% static 'assets/js/bflow_ai/ask-demo.js' %}"></script>
     <script src="{% static 'assets/js/bflow_ai/bflow_chatbot_main.js' %}"></script>
 {% endblock %}
