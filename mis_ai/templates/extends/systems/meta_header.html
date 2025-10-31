@@ -1,0 +1,22 @@
+{% load string_utils static %}
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}{{ base.tenant_current_data.code|upper }}{% endblock %}
+    &#8901; {{ base.tenant_current_data|parsed_title_page|safe }}</title>
+<meta name="description" content="Management Information System"/>
+
+<meta property="og:url" content="www.bflow.vn"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="{{ base.tenant_current_data.code|upper }} &#8901; {{ base.tenant_current_data|parsed_title_page|safe }}"/>
+<meta property="og:description" content="Bflow - Giải pháp toàn diện cho doanh nghiệp"/>
+
+{% if base.company_current_data.logo %}
+    <link rel="shortcut icon" href="{{ base.company_current_data.logo }}">
+    <link rel="icon" href="{{ base.company_current_data.logo }}" type="image/x-icon">
+    <meta property="og:image" content="{{ base.company_current_data.logo }}"/>
+{% else %}
+    <link rel="shortcut icon" href="{% static 'assets/images/brand/bflow/favicon.ico' %}">
+    <link rel="icon" href="{% static 'assets/images/brand/bflow/favicon.ico' %}" type="image/x-icon">
+    <meta property="og:image" content="{% static 'assets/images/brand/bflow/favicon.ico' %}"/>
+{% endif %}

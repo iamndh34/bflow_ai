@@ -1,0 +1,30 @@
+{% load i18n %}
+
+<div class="card card-body bg-light card-location">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label class="form-label">{% trans "Detail address" %}</label>
+                <textarea class="form-control location_detail_address" placeholder="No. 123, Le Loi St." type="text"></textarea>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label class="form-label">{% trans "Country" %}</label>
+                <select class="form-select location_country" data-url="{% url "CountryListAPI" %}" data-method="GET"></select>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label class="form-label">{% trans "Province" %}</label>
+                <select disabled class="form-select location_province" data-raw-url="{% url "NProvinceListAPI" %}" data-url="{% url "NProvinceListAPI" %}" data-method="GET"></select>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label class="form-label">{% trans "Ward" %}</label>
+                <select disabled class="form-select location_ward" data-raw-url="{% url "NWardListAPI" %}" data-url="{% url "NWardListAPI" %}" data-method="GET"></select>
+            </div>
+        </div>
+    </div>
+</div>

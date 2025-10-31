@@ -1,0 +1,456 @@
+{% load static i18n person_utils %}
+
+<div class="d-inline-block">
+    <button
+            class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover dropdown-toggle no-caret mr-1"
+            id="notifyDropdownData"
+            data-url="{% url 'MyNotifyAllAPI' %}"
+            data-method="GET"
+    >
+        {{ base.app_name_translate|json_script:'app_name_translate' }}
+        <span
+                id="idxNotifyBell"
+                data-url="{% url 'MyNotifyNoDoneCountAPI' %}"
+                class="icon"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                data-bs-original-title="{% trans 'Notifications' %}"
+        >
+            <span class="position-relative">
+                <div class="avatar avatar-icon avatar-xxs avatar-rounded">
+                    <span class="initial-wrap">
+                        <i
+                                class="fa-regular fa-bell fa-sm my-bell"
+                                id="idxNotifyBellIcon"
+                        ></i>
+                    </span>
+                    <span
+                            class="badge badge-warning badge-sm position-top-end-overflow-1"
+                            id="my-notify-count"
+                    ></span>
+                </div>
+            </span>
+        </span>
+    </button>
+    <div
+            id="notify-bell-list"
+            style="display:none;"
+            data-url-done-notify="{% url 'ResolveNotifyItemAPI' pk='__pk__' %}"
+    >
+        <div class="notify-bell-content-group">
+            <div class="notify-bell-content" style="display:none;">
+            <div class="notify-bell-list-head">
+                <p class="mr-2">{% trans 'Notifications' %}</p>
+                <select
+                        class="form-select form-select-sm" style="display: inline-block;width: 100px"
+                        id="notify-bell-filter"
+                >
+                    <option value="unseen" selected>{% trans 'Not seen' %}</option>
+                    <option value="seen">{% trans 'Seen' %}</option>
+                    <option value="all">{% trans 'All' %}</option>
+                </select>
+                <div class="head-tools">
+                    <button
+                            class="btn btn-icon btn-rounded btn-flush-light btn-xs"
+                            data-bs-toggle="tooltip"
+                            id="notifyBtnSeenAll"
+                            title="{% trans 'Seen all' %}"
+                            data-url="{% url 'MyNotifySeenAllAPI' %}"
+                            data-method="PUT"
+                    >
+                        <span class="icon">
+                            <i class="fa-solid fa-check-double text-white"></i>
+                        </span>
+                    </button>
+                    <button
+                            class="btn btn-icon btn-rounded btn-flush-light btn-xs"
+                            data-bs-toggle="tooltip"
+                            id="notifyBtnDeleteAll"
+                            title="{% trans 'Delete all' %}"
+                            data-url="{% url 'MyNotifyCleanAllAPI' %}"
+                            data-method="DELETE"
+                    >
+                        <span class="icon">
+                            <i class="fa-solid fa-trash text-white"></i>
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="notify-bell-item-sub-base" class="notify-bell-item notify-bell-item-sub"><p></p></div>
+            <div
+                    id="notify-bell-item-base"
+                    class="notify-bell-item"
+                    data-bs-toggle="tooltip"
+                    title=""
+            >
+                <div class="item-group">
+                    <div class="item-image">
+                        <span class="item-image-unread"></span>
+                        <img
+                                class="notify-item-img img-filter-opacity-50"
+                                src="{% static 'assets/images/systems/person-avt.png' %}" alt=""
+                                style="width: 100%;height: 100%;"
+                        />
+                        <span class="item-image-sub-icon"></span>
+                    </div>
+                    <div class="item-data">
+                        <p class="item-data-msg"></p>
+                        <p>
+                            <span class="item-data-app"></span>
+                            <span class="item-data-time"></span>
+                        </p>
+                        <div class="mt-1 d-flex">
+                            <a href="#" class="data-btn-detail-item">
+                                <button
+                                        class="btn btn-icon btn-flush-primary btn-xs no-transform"
+                                        data-bs-toggle="tooltip"
+                                        title="{% trans 'Goto detail page' %}"
+                                >
+                                    <span class="icon">
+                                        <i class="fa-solid fa-right-to-bracket"></i>
+                                    </span>
+                                </button>
+                            </a>
+                            <button
+                                    class="btn btn-icon btn-flush-primary btn-xs no-transform data-btn-read-item"
+                                    data-bs-toggle="tooltip"
+                                    title="{% trans 'Mark as read' %}"
+                            >
+                                    <span class="icon">
+                                        <i class="fa-brands fa-readme"></i>
+                                    </span>
+                            </button>
+                            <button
+                                    class="btn btn-icon btn-flush-primary btn-xs no-transform data-btn-mention-reply"
+                                    data-bs-toggle="tooltip"
+                                    title="{% trans 'Reply' %}"
+                            >
+                                    <span class="icon">
+                                        <i class="fa-solid fa-comment-dots"></i>
+                                    </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                    class="notify-bell-list-body"
+                    style="max-height: calc(90vh - 120px); min-height: 300px;overflow-y: auto"
+            >
+                <div class="notify-bell-empty">
+                    <div class="w-100 d-flex justify-content-center py-5">
+                        <div class="text-center">
+                            <i class="fa-solid fa-wand-sparkles fa-2xl" style="color: #5e7d8a;"></i>
+                            <p class="mt-3" style="color: #4b646e;">{% trans 'No notification here' %}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                    class="notify-bell-load-more" data-bs-toggle="tooltip"
+                    title="{% trans 'Click here to load more notifications' %}"
+            >
+                <i class="fa-solid fa-angles-down fa-xs"></i>
+            </div>
+            <div class="notify-bell-list-foot">
+                <a href="{% url 'MyNotifyPageView' %}">{% trans 'See all recent notifications' %}</a>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="dropdown-menu dropdown-menu-end p-0">
+        <h6 class="dropdown-header px-4 fs-6">
+            {% trans 'Notifications' %}
+            <div>
+                <button
+                        class="btn btn-icon btn-rounded bg-dark-hover mr-1"
+                        id="btnNotifySeenAll"
+                        data-url="{% url 'MyNotifySeenAllAPI' %}"
+                        data-method="PUT"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-original-title="{% trans 'Seen all' %}"
+                >
+                    <span class="icon">
+                        <i class="fa-solid fa-check-double"></i>
+                    </span>
+                </button>
+                <button
+                        class="btn btn-icon btn-rounded bg-dark-hover mr-1"
+                        id="btnNotifyClearAll"
+                        data-url="{% url 'MyNotifyCleanAllAPI' %}"
+                        data-method="DELETE"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        data-bs-original-title="{% trans 'Delete all viewed notifications' %}"
+                >
+                    <span class="icon">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </span>
+                </button>
+            </div>
+        </h6>
+        <div
+                data-simplebar class="dropdown-body p-2"
+                style="height: 38rem;"
+        >
+            <div
+                    id="idxNotifyShowData"
+                    data-url-done-notify="{% url 'ResolveNotifyItemAPI' pk='__pk__' %}"
+                    data-msg-reply="{% trans 'Reply' %}"
+                    data-msg-seen="{% trans 'Mask seen' %}"
+                    data-msg-goto="{% trans 'Goto' %}"
+            ></div>
+        </div>
+        <div class="dropdown-footer hidden"><a
+                href="#"
+        ><u>{% trans 'View all notifications' %}</u></a>
+        </div>
+    </div>
+</div>
+
+<div class="d-inline-block">
+    <button
+            class="btn btn-icon btn-rounded dropdown-toggle no-caret"
+            role="button"
+            data-bs-display="static"
+            data-bs-toggle="dropdown" data-dropdown-animation
+            data-bs-auto-close="outside"
+            aria-expanded="false"
+    >
+        <div style="max-width: 2rem; max-height: 2rem;overflow: hidden;border-radius: 100%;">
+            {{ base|render_avatar_tag:True|safe }}
+        </div>
+    </button>
+    <div class="dropdown-menu border border-2 rounded dropdown-menu-end mr-1" style="min-width: 200px;">
+        <div class="p-2">
+            <div class="media mb-1">
+                <div class="media-head me-2">
+                    <div class="position-relative avatar avatar-primary avatar-sm avatar-rounded my-avatar">
+                        {{ base|render_avatar_tag:True|safe }}
+                    </div>
+                </div>
+                <div class="media-body">
+                    <div class="dropdown">
+                        <b>{{ base.fullname }}</b>
+                    </div>
+                    <div class="fs-7">
+                        <a
+                                id="email-request-owner"
+                                href="mailto:{{ base.email }}"
+                        >{{ base.email }}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 d-flex">
+                <a
+                        href="{% url 'MyProfileView' %}"
+                        class="m-1 flex-1"
+                        data-bs-toggle="tooltip"
+                        title="{% trans 'My profile' %}"
+                >
+                    <button class="btn btn-xs btn-soft-primary w-100">
+                        <i class="fa-solid fa-address-card"></i>
+                    </button>
+                </a>
+                <a
+                        href="{% url 'ChangePasswordView' %}"
+                        class="m-1 flex-1"
+                        data-bs-toggle="tooltip"
+                        title="{% trans 'Change password' %}"
+                >
+                    <button class="btn btn-xs btn-soft-primary w-100">
+                        <i class="fa-solid fa-key"></i>
+                    </button>
+                </a>
+                <a
+                        class="m-1 flex-1"
+                        href="#"
+                        data-bs-toggle="tooltip"
+                        title="{% trans 'Language' %}"
+                >
+                    <button
+                            class="btn btn-xs btn-soft-primary w-100"
+                            id="link-language"
+                            data-url="{% url 'MyLanguageAPI' %}"
+                            data-value="{{ base.language }}"
+                    >
+                        {% if base.language == 'vi' %}
+                            <img src="{% static 'assets/images/systems/flags/vietnam-36x36.png' %}" alt="vietnam" style="width: 1rem;">
+                        {% else %}
+                            {{ base.language|upper }}
+                        {% endif %}
+                    </button>
+                </a>
+            </div>
+        </div>
+        <a
+                id="link-logout1" class="w-100 btn btn-soft-danger"
+                href="{% url 'AuthLogout' %}?next={{ request.path }}"
+        >
+            <span>
+                <span class="icon">
+                    <span class="feather-icon">
+                        <i data-feather="log-out"></i>
+                    </span>
+                </span>
+                <span>{% trans 'Sign Out' %}</span>
+            </span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <h6 class="dropdown-header">
+            {% trans 'Manage account' %}
+        </h6>
+        <span
+                class="d-none"
+                id="data-current-base"
+                data-has-company-list="{% if base.companies_data|length > 0 %}true{% else %}false{% endif %}"
+                data-has-current-company="{% if base.company_current_data %}true{% else %}false{% endif %}"
+                data-has-current-employee="{% if base.employee_current_data %}true{% else %}false{% endif %}"
+                data-url-admin-tenant="{% url 'UserAdminTenant' %}"
+                data-url-admin-company="{% url 'EmployeeAdminCompanyAPI' %}"
+        ></span>
+        {% if base.company_current_data %}
+            <a
+                    id="company-current-id"
+                    class="dropdown-item" href="javascript:void(0);"
+                    data-bs-toggle="tooltip" data-bs-placement="left"
+                    title="{% trans 'Click to switch company' %}"
+                    data-id="{{ base.company_current_data.id }}"
+                    style="max-width: 20em;overflow: hidden;text-overflow: ellipsis;"
+            >
+                <span class="dropdown-icon">
+                    <i class="fa-solid fa-retweet"></i>
+                </span>
+                <span
+                        id="btnChangeCurrentCompany"
+                        data-bs-toggle="modal"
+                        data-bs-target="#switchMyCompany"
+                >
+                    {{ base.company_current_data.title }}
+                    <small>({{ base.company_current_data.code }})</small>
+                </span>
+            </a>
+            {% if base.employee_current_data %}
+                <a
+                        id="idx-link-to-current-employee"
+                        class="dropdown-item"
+                        href="{% url 'EmployeeDetail' pk=base.employee_current_data.id %}"
+                        data-value-id="{{ base.employee_current_data.id }}"
+                        data-value-full="{% current_employee_str %}"
+                        data-bs-toggle="tooltip" data-bs-placement="left"
+                        title="{% trans 'Profile' %}"
+                >
+                    <span class="dropdown-icon feather-icon">
+                        <i data-feather="user"></i>
+                    </span>
+                    <span>
+                        {{ base.employee_current_data.full_name }}
+                    </span>
+                </a>
+            {% else %}
+                <a class="dropdown-item" href="/">{% trans 'Profile' %}</a>
+            {% endif %}
+        {% endif %}
+
+        <div class="dropdown-divider"></div>
+        <a
+                class="dropdown-item" href="#" data-bs-toggle="modal"
+                data-bs-target="#modalRaiseTicket"
+        >
+            <span class="dropdown-icon feather-icon">
+                <i data-feather="tag"></i>
+            </span>
+            <span>{% trans 'Raise a ticket' %}</span>
+        </a>
+        <a class="dropdown-item d-none" href="{% url 'TermsAndConditionsView' %}">
+            <span class="dropdown-icon feather-icon">
+                <i data-feather="book"></i>
+            </span>
+            <span>{% trans 'Terms & Conditions' %}</span>
+        </a>
+        <a
+                class="dropdown-item"
+                href="https://docs.bflow.vn/"
+        >
+            <span class="dropdown-icon feather-icon">
+                <i data-feather="help-circle"></i>
+            </span>
+            <span>{% trans 'Help & Support' %}</span>
+        </a>
+
+        {% if is_debug_src %}
+            <div class="dropdown-divider"></div>
+            <h6 class="dropdown-header">Testing Product</h6>
+            <a class="dropdown-item" href="{% url 'UtilitiesView' %}">
+                <span class="dropdown-icon">
+                    <i class="fa-solid fa-toolbox"></i>
+                </span>
+                <span>Utility tools page</span>
+            </a>
+            <a class="dropdown-item" href="{% url 'DefaultDataView' %}">
+                <span class="dropdown-icon">
+                    <i class="fa-solid fa-table"></i>
+                </span>
+                <span>System default data page</span>
+            </a>
+            <a class="dropdown-item" href="{% url 'ComponentCollections' %}">
+                <span class="dropdown-icon">
+                    <i class="fa-solid fa-puzzle-piece"></i>
+                </span>
+                <span>Components</span>
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+{#                                            <button#}
+{#                                                    class="btn btn-icon btn-rounded bg-dark-hover mr-1 hk-navbar-togglable"#}
+{#                                                    data-bs-toggle="tooltip"#}
+{#                                                    data-bs-placement="bottom"#}
+{#                                                    data-bs-original-title="{% trans 'Collapse' %}"#}
+{#                                            >#}
+{#                                                <span class="icon">#}
+{#                                                    <i class="fa-solid fa-chevron-up fa-sm"></i>#}
+{#                                                    <i class="fa-solid fa-chevron-down fa-sm d-none"></i>#}
+{#                                                </span>#}
+{#                                            </button>#}
+
+<div
+        class="modal fade" id="switchMyCompany" tabindex="-1" role="dialog"
+        aria-labelledby="switchMyCompany" aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans 'Switch Company' %}</h5>
+                <button
+                        type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div id="body-call-switch-company">
+                        {% csrf_token %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                        type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                >{% trans 'Close' %}</button>
+                <button
+                        id="btn-call-switch-company"
+                        data-url="{% url 'SwitchCompanyCurrentView' %}"
+                        data-method="PUT"
+                        type="button" class="btn btn-primary"
+                >{% trans 'Save' %}</button>
+            </div>
+        </div>
+    </div>
+</div>

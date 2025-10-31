@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% block fullBody %}
+    <div class="hk-pg-wrapper"  style="display:flex; justify-content: center;align-items: center;">
+        <div class="container-xxl">
+            <!-- Page Body -->
+            <div class="hk-pg-body">
+                <div class="row">
+                    <div class="col-xl-7 col-lg-6 d-lg-block d-none">
+                        <div class="auth-content py-md-0 py-8">
+                            <div class="row">
+                                <div class="col-xl-12 text-center">
+                                    <img
+                                            src="{% static 'assets/home/bg-404.png' %}" class="img-fluid w-sm-80 w-50"
+                                            alt="login"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 col-md-7 col-sm-10">
+                        <div class="auth-content py-md-0 py-8 mt-10">
+                            <div class="w-100">
+                                <div class="row">
+                                    <div class="col-xxl-9 col-xl-8 col-lg-11">
+                                        <h1 class="display-4 fw-bold mb-2">404</h1>
+
+                                        <p class="p-lg">{% trans 'Sorry, the requested page cannot be found.' %}</p>
+                                        <p class="p-lg">{% trans 'Try finding with another name.' %}</p>
+
+                                        <p class="mt-3">
+                                            {% trans 'You can reach out to our support team through the following channels' %}:
+                                        </p>
+                                        <ul style="list-style: circle">
+                                            <li>
+                                                <a href="https://www.facebook.com/profile.php?id=61568318031099">Facebook</a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.linkedin.com/company/minhtamsolutionvn/">LinkedIn</a>
+                                            </li>
+                                            <li>
+                                                {% if base.language == 'vi' %}
+                                                    <a
+                                                            href="
+                                                                mailto:support@bflow.vn
+                                                                ?subject=[{{ data.company_code|upper }}] Tôi cần Bflow hỗ trợ
+                                                                &body=[{{ data.company_title }}][{{ data.user_id }}] %0D%0A%0D%0AChào đội hỗ trợ Bflow,%0D%0ATôi cần hỗ trợ về vấn đề ....
+                                                            "
+                                                    >support@bflow.vn</a>
+                                                {% else %}
+                                                    <a
+                                                        href="
+                                                            mailto:support@bflow.vn
+                                                            ?subject=[{{ data.company_code|upper }}] I need support from Bflow
+                                                            &body=[{{ data.company_title }}][{{ data.user_id }}] %0D%0A%0D%0AHi Bflow support team,%0D%0AI need help with a problem ....
+                                                        "
+                                                    >support@bflow.vn</a>
+                                                {% endif %}
+                                            </li>
+                                        </ul>
+                                        <button
+                                                class="btn btn-secondary mt-4 no-transform"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalRaiseTicket"
+                                        >{% trans 'Report this issue' %}</button>
+                                        <br/>
+                                        <a href="{% url 'HomeView' %}">
+                                            <button class="btn btn-primary mt-2 no-transform">
+                                                {% trans 'Return to home' %}
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Body -->
+        </div>
+
+        {% include 'extends/systems/footer.html' %}
+
+    </div>
+{% endblock %}

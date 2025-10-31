@@ -1,0 +1,16 @@
+<button
+        type="button"
+        class="btn btn-xs btn-icon btn-rounded btn-flush-dark flush-soft-hover card-action card-action-collapse"
+        data-bs-toggle="collapse"
+        data-bs-target="#{{ idx }}"
+        aria-expanded="{% if is_open == True %}true{% else %}false{% endif %}"
+>
+    <span class="icon">
+        <span class="feather-icon {% if is_open == True %}d-none{% else %}{% endif %}" data-id="down">
+            <i data-feather="chevron-down"></i>
+        </span>
+        <span class="feather-icon {% if is_open == True %}{% else %}d-none{% endif %}" data-id="up">
+            <i data-feather="chevron-up"></i>
+        </span>
+    </span>
+</button>

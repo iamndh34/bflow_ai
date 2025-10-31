@@ -1,0 +1,137 @@
+.drop-content {
+    background-color: #f2f5f6;
+    width: 100%;
+    min-height: 200px;
+    padding: 1rem 1rem 5rem;
+}
+
+.design-preview,
+#btnGetData,
+#htmlContainer {
+    width: 100%;
+}
+
+#htmlContainer {
+    overflow: auto;
+    min-height: 500px;
+    max-height: 1000px;
+}
+
+#drag-container {
+    min-height: 500px;
+    padding-right: 10px;
+}
+
+#drag-container::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #F5F5F5;
+}
+
+#drag-container::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+#drag-container::-webkit-scrollbar-thumb {
+    background-color: #b4b4b4;
+    border: 2px solid #e8e8e8;
+}
+
+.drag-component,
+.drag-component-child {
+    padding: 5px 5px;
+    margin-bottom: 2px;
+    z-index: 999;
+    cursor: pointer;
+    text-align: center;
+}
+
+.drag-component {
+    color: #fcfcfc;
+    background-color: #007D88;
+    border: 1px solid #007D88;
+    border-radius: 3px;
+}
+
+.drag-component-child {
+    color: #ffffff;
+    background-color: #00d67f;
+    border: 1px solid #00d67f;
+    border-radius: 3px;
+}
+
+.design-preview {
+    border: 1px solid black;
+    padding: 1rem 1rem 5rem;
+    overflow: scroll;
+}
+
+.drop-content .utils-form {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.drop-content .util-form-control {
+    z-index: 1000;
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: center;
+    padding: 3px;
+}
+
+.drop-content .util-form-row {
+    background-color: rgb(220, 220, 220);
+}
+
+.drop-content .util-form-row i {
+    color: rgb(89, 89, 89);
+}
+
+.drop-content .util-form-row > * {
+    display: block;
+}
+
+.drop-content .util-form-control-btn:hover {
+    color: rgb(255, 255, 255);
+}
+
+.drop-content .util-child-group:not(:last-child) {
+    border-bottom: 1px dashed #ffffff;
+}
+
+.drop-content .my-col {
+    min-height: 5rem;
+    color: #5d5d5d;
+    background-color: #d8d8d8;
+    padding: 5px 5px 3rem;
+    overflow: hidden;
+}
+
+.drop-content .tab-content {
+    background-color: #ffffff;
+}
+
+.drop-content .my-col {
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.drop-content .my-row {
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.drop-content .my-col:hover {
+    border: 1px solid rgb(0, 175, 141);
+}
+
+.drop-content .my-row:hover .util-form-control.util-form-row {
+    display: block;
+}
+
+.drop-content .util-child-group:hover .util-form-control.util-form-cell {
+    display: block;
+}
+
+/* util-form-control util-form-row */

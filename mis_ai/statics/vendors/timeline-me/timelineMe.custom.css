@@ -1,0 +1,19 @@
+.timeline-me-shortcontent, .timeline-me-fullcontent {
+    background-color: #eaeaea;
+}
+
+.custom-show-btn {
+    position: absolute;
+    right: 20px;
+    bottom: -12px;
+    background-color: #359BCE;
+    border-radius: 50%;
+    color: #FFFFFF;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}

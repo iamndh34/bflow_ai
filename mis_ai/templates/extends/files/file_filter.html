@@ -1,0 +1,50 @@
+{% load i18n string_utils %}
+
+{% random_str 10 True as id_modal %}
+
+{#<div class="d-flex justify-content-end">#}
+{#    <div class="nav-pills-bfl" role="group" aria-label="Button group with nested dropdown">#}
+{#            <button#}
+{#                    type="button" class="btn nav-link" id="open-file-filter"#}
+{#                    data-bs-toggle="tooltip"#}
+{#                    data-bs-placement="bottom" title="{% trans 'Filter' %}"#}
+{#            ><span class="icon"><i class="fas fa-filter"></i></span></button>#}
+{#    </div>#}
+{#</div>#}
+
+<div class="offcanvas offcanvas-end w-30" tabindex="-1" id="fileFilterCanvas" aria-labelledby="offcanvasTopLabel">
+    <div class="modal-header">
+        <h5 class="modal-title"><b>{% trans 'Filter attributes of file' %}</b></h5>
+        <button
+                type="button"
+                class="btn btn-icon btn-rounded btn-flush-light flush-soft-hover btn-lg"
+                data-bs-dismiss="offcanvas"
+        ><span class="icon"><i class="far fa-window-close"></i></span></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="form-group">
+            <label class="form-label float-left">{% trans 'Document type' %}</label>
+            <select
+                    class="form-select file_attr_document_type"
+                    data-url="{% url 'DocumentTypeConfigListAPI' %}"
+                    data-method="GET"
+                    data-keyResp="document_type_list"
+                    multiple
+            ></select>
+        </div>
+        <div class="form-group">
+            <label class="form-label float-left">{% trans 'Content group' %}</label>
+            <select
+                    class="form-select file_attr_content_group"
+                    data-url="{% url 'ContentGroupListAPI' %}"
+                    data-method="GET"
+                    data-keyResp="content_group_list"
+                    multiple
+            ></select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">{% trans 'Close' %}</button>
+        <button type="button" class="btn btn-primary" id="apply-file-filter" data-bs-dismiss="offcanvas">{% trans 'Apply' %}</button>
+    </div>
+</div>

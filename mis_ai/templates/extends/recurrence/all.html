@@ -1,0 +1,12 @@
+{% load i18n string_utils %}
+
+{% random_str 10 True as id_modal %}
+
+<div class="row">
+    <div class="d-flex justify-content-end">
+        <div class="form-check form-check-lg">
+            <input type="checkbox" class="form-check-input" id="is-recurring" name="is_recurrence_template">
+            <label class="form-check-label" for="is-recurring">{% trans 'Set as recurring template' %}</label>
+        </div>
+    </div>
+</div>

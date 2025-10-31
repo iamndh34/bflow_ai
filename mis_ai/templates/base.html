@@ -1,0 +1,99 @@
+{% load static %}
+{% load bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"
+            type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.css"/>
+    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+
+    {#  Select2  #}
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    {% block header_block %}
+
+    {% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+    {% csrf_token %}
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Book Manager</span>
+        <div type="button" class="text-light mx-4" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+             aria-controls="offcanvasRight">Menu
+        </div>
+    </div>
+</nav>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel" class="fw-bold">Book Manager</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="btn-group-vertical w-100">
+{#            <button class="btn-menu btn btn-light fw-bold mb-4 rounded-pill" data-url="{% url 'user:UserListView' %}">#}
+{#                User Manager#}
+{#            </button>#}
+{#            <button class="btn-menu btn btn-light fw-bold mb-4 rounded-pill" data-url="{% url 'book:BookListView' %}">#}
+{#                Book Manager#}
+{#            </button>#}
+{#            <button class="btn-menu btn btn-light fw-bold mb-4 rounded-pill"#}
+{#                    data-url="{% url 'author:AuthorListView' %}">Author Manager#}
+{#            </button>#}
+{#            <button class="btn-menu btn btn-light fw-bold mb-4 rounded-pill"#}
+{#                    data-url="{% url 'store:storeListView' %}">Store Manager#}
+{#            </button>#}
+{#            <button id="btn-logout" class=" btn btn-light fw-bold mb-4 rounded-pill"#}
+{#                    data-url="{% url 'authentication:AuthenticationLogoutApi' %}">Logout#}
+{#            </button>#}
+        </div>
+    </div>
+</div>
+<div class="container my-5">
+    {% block content %}
+    {% endblock %}
+</div>
+<script>
+    $(document).ready(function () {
+        $(".btn-menu").on('click', function () {
+            let url = $(this).attr('data-url')
+            if (url)
+                window.location.replace(url)
+            else
+                window.location.reload()
+        });
+
+        $("#btn-logout").on('click', function () {
+            let url = $(this).attr('data-url')
+
+            $.ajax({
+                url: url,
+                method: "POST",
+                headers: {"X-CSRFToken": $('input[name="csrfmiddlewaretoken"]').val()},
+                success: function (response) {
+                    alert(response);
+                    window.location.reload()
+                },
+                error: function (error) {
+                    alert('Logout fail!')
+                    console.log(error)
+                }
+            })
+        })
+    });
+</script>
+{% block js_block %}
+
+{% endblock %}
+</body>
+</html>

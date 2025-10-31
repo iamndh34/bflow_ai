@@ -1,0 +1,8 @@
+{% load i18n string_utils %}
+
+{% random_str 10 True as id_modal %}
+
+<div class="tab-pane fade" id="tab_task">
+    {% include 'extends/task/list.html' %}
+</div>
+{% include 'extends/task/list_task_assigned.html' %}

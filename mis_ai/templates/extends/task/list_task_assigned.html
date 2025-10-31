@@ -1,0 +1,30 @@
+{% load i18n string_utils %}
+
+{% random_str 10 True as id_modal %}
+
+<div
+        class="modal fade" id="listTaskAssignedModal" tabindex="-1"
+        role="dialog" aria-labelledby="listTaskAssignedModal"
+>
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><b>{% trans 'List task assigned' %}</b></h5>
+                <button
+                        type="button"
+                        class="btn btn-icon btn-rounded btn-flush-light flush-soft-hover btn-lg"
+                        data-bs-dismiss="modal"
+                ><span class="icon"><i class="far fa-window-close"></i></span></button>
+            </div>
+            <div class="modal-body">
+                <div class="list_task_wrap">
+                    <table id="table_task_list" class="table nowrap table-advance w-100">
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans 'Close' %}</button>
+            </div>
+        </div>
+    </div>
+</div>

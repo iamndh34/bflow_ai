@@ -1,0 +1,12 @@
+{% load i18n string_utils %}
+
+<div class="form-group">
+    {% random_str as idx_fn %}
+    <label for="{{idx_fn}}" class="form-label">{% trans 'Title' %}</label>
+    <input type="text" id="{{idx_fn}}" class="form-control opp-info-detail-title" disabled readonly>
+</div>
+<div class="form-group">
+    {% random_str as idx_ln %}
+    <label for="{{idx_ln}}" class="form-label">{% trans 'Code' %}</label>
+    <input type="text" id="{{idx_ln}}" class="form-control opp-info-detail-code" disabled readonly>
+</div>

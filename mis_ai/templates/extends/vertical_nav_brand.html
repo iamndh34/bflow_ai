@@ -1,0 +1,39 @@
+{% load static %}
+<!-- Brand -->
+<div class="menu-header">
+    <span>
+        <a class="navbar-brand" href="/">
+            {% if request.user.company_has_icon == True %}
+                <img class="brand-img img-fluid rounded" src="{{ request.user.company_icon_uri }}" style="max-width: 40px; max-height: 40px; object-fit: contain;"/>
+                <img class="brand-img img-fluid rounded" src="{{ request.user.company_logo_uri }}" style="max-width: 112px; max-height: 40px; object-fit: contain;margin-left: 1rem;"/>
+            {% else %}
+                <img class="brand-img img-fluid rounded" src="{{ request.user.company_logo_uri }}" style="max-width: 40px; max-height: 40px; object-fit: contain;"/>
+                <span class="brand-img img-fluid rounded"></span>
+            {% endif %}
+        </a>
+{#        <button class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover navbar-toggle">#}
+{#            <span class="icon">#}
+{#                <span class="svg-icon fs-5">#}
+{#                    <svg#}
+{#                            xmlns="http://www.w3.org/2000/svg"#}
+{#                            class="icon icon-tabler icon-tabler-arrow-bar-to-left" width="24" height="24"#}
+{#                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"#}
+{#                            stroke-linecap="round" stroke-linejoin="round"#}
+{#                    >#}
+{#                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>#}
+{#                        <line x1="10" y1="12" x2="20" y2="12"></line>#}
+{#                        <line x1="10" y1="12" x2="14" y2="16"></line>#}
+{#                        <line x1="10" y1="12" x2="14" y2="8"></line>#}
+{#                        <line x1="4" y1="4" x2="4" y2="20"></line>#}
+{#                    </svg>#}
+{#                </span>#}
+{#            </span>#}
+{#        </button>#}
+    </span>
+</div>
+{#<div class="ml-3">#}
+{#   <button class="btn btn-icon btn-lg btn-rounded btn-flush-dark flush-soft-hover navbar-toggle">#}
+{#        <span class="icon"><i class="fas fa-bars fs-3"></i></span>#}
+{#    </button>#}
+{#</div>#}
+<!-- /Brand -->

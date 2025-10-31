@@ -1,0 +1,22 @@
+{% load i18n %}
+{% if s_frm_txt %}
+<div class="btn-group save-btn-group" role="group">
+    <button class="btn btn-outline-primary {{ s_class }}" type="submit" form="{{ s_frm_txt }}" {{ s_attr }}>
+        {% if s_btn_name %}{{ s_btn_name }}
+        {% else %}{% trans 'Add' %}{% endif %}
+    </button>
+    <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+            aria-expanded="false">
+		<span class="visually-hidden">Toggle Dropdown</span>
+	</button>
+    <div class="dropdown-menu dropdown-menu-end">
+        {% if s_draft_url %}
+        <a href="{{ s_draft_url }}" class="dropdown-item">
+            <button class="btn w-100" type="submit" form="{{ s_draft_frm_txt }}" {{ attr }}>
+                {% trans 'Save as draft' %}
+            </button>
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}

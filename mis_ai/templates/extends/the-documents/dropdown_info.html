@@ -1,0 +1,28 @@
+{% load string_utils i18n %}
+
+{% parse_data_or_default width_cls_dd "w-280p mt-2" as width_cls_dd %}
+{% parse_data_or_default width_cls_dd_content "" as width_cls_dd_content %}
+{% parse_data_or_default idx "" as idx %}
+
+<div class="dropdown-menu info-btn-more-detail border border-1 {{ width_cls_dd }}" {% attr_and_value_else_blank "id" idx %}>
+    <h1>{{ detail_url }}</h1>
+    <div class="group-by-link-detail-more d-flex justify-content-start mb-1">
+        <span class="text-lg text-indigo"><b>{% trans 'Information' %}</b></span>
+        <a href="#" target="_blank" class="link-detail-more link-primary underline_hover ml-auto">
+            <span>
+                {% trans 'Go to detail' %}
+            </span>
+            <span class="icon ml-1">
+                <i class="bi bi-arrow-right-circle-fill"></i>
+            </span>
+        </a>
+    </div>
+    <div class="dropdown-divider"></div>
+    <div class="mb-1 info-btn-more-detail-data {{ width_cls_dd_content }}">
+        {% if display_data_template %}
+            {% include display_data_template %}
+        {% elif display_data_html %}
+            {{ display_data_html|safe }}
+        {% endif %}
+    </div>
+</div>

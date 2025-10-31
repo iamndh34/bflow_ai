@@ -1,0 +1,13 @@
+{% load i18n template_filter %}
+{% if frm.ORDER %}{{ frm.ORDER|add_class:'hidden' }}{% endif %}
+{% if frm.DELETE %}{{ frm.DELETE|add_class:'hidden' }}{% endif %}
+<div class="wrapper-formset row">
+    <div class="col-md-2">
+{#        {{ frm.name|add_class:'form-control' }}#}
+        {{ frm.logic|add_class:'form-control formset-logic' }}
+    </div>
+    <div class="col-md-10" data-subformset-prefix="{{ sub_formset.prefix }}">
+        <div class="formsets" data-subformset-body></div>
+        <a href="javascript:void(0);" data-subformset-add>{% trans 'Add more' %}</a>
+    </div>
+</div>

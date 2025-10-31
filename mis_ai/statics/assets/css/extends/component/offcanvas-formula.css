@@ -1,0 +1,42 @@
+.list_value_code ul{
+    padding-left: 0;
+}
+.list_value_code li{
+    color: #6f6f6f;
+    font-weight: 400;
+    line-height: 1.5;
+    font-size: 1rem;
+    padding: .375rem  1rem;
+}
+.list_value_code li:hover{
+    color: #fff;
+    background: #6f6f6f;
+}
+.property-list{
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 100%;
+    max-height: 450px;
+}
+.bg-gray-10{
+    background: #ebebeb!important;
+}
+.card.card-wth-line{
+    padding-left: .25rem;
+    padding-top:0;
+}
+.card-body{
+    border-bottom-left-radius: 0.5rem;
+    border-top-left-radius: 0.5rem;
+}
+.card-line.card-left{
+    width: 30px!important;
+    height:100%!important;
+    border-bottom-left-radius: .5rem;
+    left: 0;
+}
+span.error-message {
+    color: red;
+    font-style: italic;
+    padding-left: 10px;
+}

@@ -1,0 +1,66 @@
+{% load i18n %}
+<!-- Drawer Log and Activity -->
+<div
+        data-simplebar
+        class="ntt-drawer ntt-drawer-right nicescroll-bar"
+        data-drawer-width="500"
+        data-drawer-push="true"
+        id="drawer_log_data"
+        data-url="{% url 'FlowRuntimeDiagramDetailAPI' pk=1 %}"
+>
+    <div class="ntt-drawer-header">
+        <div>
+            <span class="ntt-drawer-header-text">{% trans 'History' %}</span>
+        </div>
+        <button class="btn btn-icon btn-xs btn-rounded bg-dark-hover ntt-drawer-close">
+            <span class="icon">
+                <span aria-hidden="true"><i class="fas fa-times"></i></span>
+            </span>
+        </button>
+    </div>
+    <div class="ntt-drawer-body">
+        <div class="ntt-drawer-content-wrap">
+            <ul class="nav nav-line nav-tabs nav-light hidden">
+                <li class="nav-item">
+                    <a
+                            class="nav-link active" data-bs-toggle="tab"
+                            href="#tab-diagram"
+                    >
+                        <span class="nav-link-text">{% trans 'Diagram Workflow' %}</span>
+                    </a>
+                </li>
+                <li class="nav-item hidden">
+                    <a class="nav-link" data-bs-toggle="tab" href="#tab-activities">
+                        <span class="nav-link-text">{% trans 'Document Activities' %}</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div
+                        class="tab-pane fade show active"
+                        id="tab-diagram"
+                        data-url="{% url 'FlowRuntimeDiagramDetailAPI' pk=1 %}"
+                >
+                    <div class="hidden" id="idxDataRuntimeNotFound">
+                        <b>
+                            {% trans "Document is auto finished because the feature doesn't apply workflow" %}
+                        </b>
+                    </div>
+                    <div
+                            id="idxDataRuntime" class="hidden"
+                            style="width: calc(100% - 3px)"
+                    ></div>
+                </div>
+                <div
+                        class="tab-pane fade" id="tab-activities"
+                        data-url="{% url 'ActivityLogListAPI' %}"
+                        data-id-key="doc_id"
+                        data-id-value="{{ pk }}"
+                >
+                    <div id="idxDataActivities"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- // Drawer Log and Activity -->

@@ -1,0 +1,44 @@
+{% load i18n string_utils %}
+
+{% random_str 10 True as id_modal %}
+
+<div class="offcanvas offcanvas-end w-70" tabindex="-1" id="indicatorCanvas" aria-labelledby="offcanvasTopLabel">
+    <div class="modal-header">
+        <h5><b>{% trans 'Indicator' %}</b></h5>
+        <button type="button" class="btn btn-icon btn-rounded btn-flush-light flush-soft-hover btn-lg" data-bs-dismiss="offcanvas"><span class="icon"><i class="far fa-window-close"></i></span></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="row non-exchange">
+            <table
+                    id="dtb_indicator"
+                    class="table nowrap w-100 mb-5"
+            >
+                <thead>
+                <tr class="bg-light tr-custom">
+                    <th>#</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary mr-2" data-bs-dismiss="offcanvas">{% trans 'Close' %}</button>
+    </div>
+</div>
+<input
+        type="text"
+        id="indicator_data"
+        data-url="{% url 'QuotationIndicatorListAPI' %}"
+
+        data-trans-th1="{% trans "Indicator name" %}"
+        data-trans-th2="{% trans "Quotation value" %}"
+        data-trans-th3="{% trans "Sale order value" %}"
+        data-trans-th4="{% trans "Difference value" %}"
+        data-trans-th5="{% trans "Indicator rate" %}"
+        data-trans-refresh="{% trans "Refresh" %}"
+        data-trans-refreshed="{% trans 'Data is refreshed.' %}"
+        hidden
+>
+{{ is_order|json_script:'is_order' }}

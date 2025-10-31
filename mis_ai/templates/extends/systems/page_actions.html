@@ -1,0 +1,71 @@
+{% load i18n string_utils %}
+
+{% parse_bool is_create as c_is %}
+{% parse_link create_link as c_link %}
+{% parse_str create_idx as c_idx %}
+{% parse_str create_attr as c_attr %}
+{% if create_title %} {% parse_str create_title as c_title %} {% else %} {% trans 'Create' as c_title %} {% endif %}
+
+{% parse_bool is_save as s_is %}
+{% parse_bool is_save_draft as s_draft_is %}
+{% parse_str save_frm as s_frm %}
+
+{% parse_bool is_edit as e_is %}
+{% parse_link edit_link as e_link %}
+{% parse_str edit_idx as e_idx %}
+{% parse_str edit_attr as e_attr %}
+{% if edit_title %} {% parse_str edit_title as e_title %} {% else %} {% trans 'Edit' as e_title %} {% endif %}
+
+{% if c_is == '1' %}
+    <a
+            href="{{ c_link }}"
+            id="{{ c_idx }}"
+    >
+        <button class="btn btn-primary">
+                <span>
+                    <span class="icon">
+                        <i class="fa-solid fa-plus"></i>
+                    </span>
+                    <span>{% trans 'Add' %}</span>
+                </span>
+        </button>
+    </a>
+{% endif %}
+
+{% if s_draft_is == '1' %}
+    <button class="btn btn-outline-primary btn-saving-form" type="submit" form="{{ s_frm }}" data-status-submit="0">
+    <span>
+        <span>{% trans 'Save Draft' %}</span>
+        <span class="icon">
+            <i class="fa-regular fa-floppy-disk"></i>
+        </span>
+    </span>
+    </button>
+{% endif %}
+
+{% if s_is == '1' %}
+    <button class="btn btn-primary" type="submit" form="{{ s_frm }}">
+    <span>
+        <span class="icon">
+            <i class="fa-solid fa-floppy-disk"></i>
+        </span>
+        <span>{% trans 'Save' %}</span>
+    </span>
+    </button>
+{% endif %}
+
+
+{% if e_is == '1' %}
+    <a
+            href="{{ e_link }}"
+    >
+        <button class="btn btn-primary" id="btn-enable-edit">
+            <span>
+                <span class="icon">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </span>
+                <span>{% trans 'Edit' %}</span>
+            </span>
+        </button>
+    </a>
+{% endif %}

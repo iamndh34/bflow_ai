@@ -1,0 +1,19 @@
+{% load template_filter %}
+{% if frm.ORDER %}{{ frm.ORDER|add_class:'hidden' }}{% endif %}
+{% if frm.DELETE %}{{ frm.DELETE|add_class:'hidden' }}{% endif %}
+<div class="child-formset subformset">
+    <div class="d-flex mb-1 flex-gap-3">
+        <div class="flex-row w-35">
+            {{ frm.left_cond }}
+        </div>
+        <div class="flex-row w-35">
+            {{ frm.math }}
+        </div>
+        <div class="flex-row w-35">
+            {{ frm.right_cond }}
+        </div>
+    </div>
+    <div class="w-20">
+        {{ frm.type|add_class:'subformset-logic' }}
+    </div>
+</div>

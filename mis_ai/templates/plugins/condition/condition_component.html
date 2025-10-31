@@ -1,0 +1,71 @@
+{% load static i18n %}
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
+    {% trans 'Setup Condition' %}
+</button>
+<hr>
+<form id="form-create-condition">
+    <button type="submit" class="btn btn-primary btn-save float-right">Get condition string</button>
+    <input type="text" class="hidden" id="home-condition">
+    {% csrf_token %}
+    {% with formset=data.form.condition %}
+        {% with sub_formset=data.form.parameter %}
+            <div id="formset-{{ formset.prefix }}" data-formset-prefix="{{ formset.prefix }}">
+                <a href="javascript:void(0);" class="cond-btn" data-formset-add="{{ formset.prefix }}">
+                    <i class="bi bi-plus-square mr-3"></i>{% trans 'Add Condition' %}
+                </a>
+                <hr>
+                {{ formset.management_form }}
+                {{ sub_formset.management_form }}
+                {% if formset.non_form_errors %}
+                    <div class="alert alertdanger">{{ formset.non_form_errors }}</div>
+                {% endif %}
+                <div class="formsets" data-formset-body>
+                    {% for frm in formset %}
+                        <div class="formset card" data-formset-form>
+                            <div class="card-body">
+                                {% include 'plugins/condition/extend/formset.html' with frm=frm %}
+                                {% include 'plugins/condition/extend/action.html' with frm=frm data_formset='formset' %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <template type="form-template" data-formset-empty-form>
+                    <div class="formset card" data-formset-form>
+                        <div class="card-body">
+                            {% include 'plugins/condition/extend/formset.html' with frm=formset.empty_form %}
+                            {% include 'plugins/condition/extend/action.html' with frm=formset.empty_form data_formset='formset' %}
+                        </div>
+                    </div>
+                </template>
+                <template type="form-template" data-subformset-empty-form>
+                    <div class="formset card" data-subformset-form>
+                        <div class="card-body">
+                            {% include 'plugins/condition/extend/subformset.html' with frm=sub_formset.empty_form %}
+                            {% include 'plugins/condition/extend/action.html' with frm=sub_formset.empty_form data_formset='subformset' %}
+                        </div>
+                    </div>
+                </template>
+            </div>
+        {% endwith %}
+    {% endwith %}
+</form>
+
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Next node conditions' %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>formset</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans 'Close' %}</button>
+                <button type="button" class="btn btn-primary">{% trans 'Save' %}</button>
+            </div>
+        </div>
+    </div>
+</div>

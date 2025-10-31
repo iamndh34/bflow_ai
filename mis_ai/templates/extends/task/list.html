@@ -1,0 +1,287 @@
+{% load static i18n %}
+{% block cssHeader %}
+    <link href="{% static 'vendors/dragula/dragula.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/css/perfect-scrollbar.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet" type="text/css"/>
+
+    <link href="{% static 'assets/sales/task/css/create-form.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/sales/task/css/task.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/sales/task/css/gantt-css.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block pageAction %}
+    <button class="btn btn-outline-primary btn-create-todo"
+            type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvasRightTask"
+            title="{% trans 'Create' %}">
+        <span>
+            <span>{% trans 'Create' %}</span>
+            <span class="icon">
+                <i class="fa-solid fa-plus"></i>
+            </span>
+        </span>
+    </button>
+{% endblock %}
+
+{% block pageContent %}
+    <!-- filter task -->
+    <div class="leave-filter-wrap">
+        <!-- btn mobile -->
+        <button class="btn btn-primary mb-4 sp-btn">
+            <span>
+                <span class="icon">
+                    <i class="fa-solid fa-filter"></i>
+                </span>
+                <span>{% trans 'Filter' %}</span>
+            </span>
+        </button>
+        <!-- btn desktop -->
+        <button class="btn btn-primary mb-4 desktop-btn">
+            <span>
+                <span class="icon">
+                    <i class="fa-solid fa-gear"></i>
+                </span>
+                <span>{% trans 'Filter' %}</span>
+            </span>
+        </button>
+        <div class="form-group-filter" style="display: none">
+            <span class="col text-decoration-underline text-uppercase">
+                <span>{% trans 'Filter by' %}</span>:
+            </span>
+            <span class="col clear-all-btn">
+                <span class="text-uppercase font-2 p-1">
+                {% trans 'Clear all' %} x</span></span>
+            <label class="filter-label" for="filter_opportunity_id">
+                {% trans 'Opportunity list' %}
+            </label>
+            <div class="max-w-280">
+                <select
+                        id="filter_opportunity_id"
+                        class="form-select"
+                        data-url="{% url 'OpportunityListAPI' %}"
+                        data-method="GET"
+                        data-keyResp="opportunity_list"
+                        data-params='{"list_from_app": "{{ data.list_from_app }}"}'
+                        data-keyText="code"
+                        data-allowClear="true"
+                ></select>
+            </div>
+            <label for="filter_task_status" class="filter-label">{% trans 'Select Status' %}</label>
+            <div class="max-w-280">
+                <select class="form-select" id="filter_task_status"
+                        data-keyResp="task_status"
+                        data-url="{% url 'OpportunityTaskStatusAPI' %}"
+                        data-allowClear="true"
+                ></select>
+            </div>
+            <label class="filter-label" for="filter_employee_id">
+                {% trans 'Assignee' %}
+            </label>
+            <div class="max-w-280">
+                <select
+                        id="filter_employee_id"
+                        class="form-select"
+                        data-url="{% url 'EmployeeListAPI' %}"
+                        data-params='{"list_from_app": "{{ data.list_from_app }}"}'
+                        data-keyResp="employee_list"
+                        data-keyText="full_name"
+                        data-allowClear="true"
+                ></select>
+            </div>
+            <div class="filter-new_row" style="flex-basis: 100%">
+                <div class="d-flex justify-content-end align-items-center gap-3">
+                    <label class="filter-label" for="filter_employee_id">
+                        {% trans 'Priority' %}
+                    </label>
+                    <div class="max-w-280">
+                        <select id="filter_priority_id"
+                                class="form-select w-280p"
+                        >
+                            <option value=""></option>
+                            <option value="0">{% trans 'Low' %}</option>
+                            <option value="1">{% trans 'Medium' %}</option>
+                            <option value="2">{% trans 'High' %}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation task list/kanban-->
+    <ul class="nav nav-line nav-light nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#tab_kanban">
+                <i class="fa-solid fa-table-columns"></i>
+                <span class="nav-link-text">{% trans 'Kanban' %}</span>
+            </a>
+        </li>
+{#        <li class="nav-item">#}
+{#            <a class="nav-link" data-bs-toggle="tab" href="#tab_list">#}
+{#                <i class="fa-solid fa-list-ul"></i>#}
+{#                <span class="nav-link-text">{% trans 'List' %}</span>#}
+{#            </a>#}
+{#        </li>#}
+{#        <li class="nav-item">#}
+{#            <a class="nav-link tab-gantt" data-bs-toggle="tab" href="#tab_gantt">#}
+{#                <i class="fa-solid fa-chart-gantt"></i>#}
+{#                <span class="nav-link-text">Gantt</span>#}
+{#            </a>#}
+{#        </li>#}
+    </ul>
+    <!-- task kanban -->
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="tab_kanban">
+            <div id="kb_scroll" class="tasklist-scroll position-relative">
+                <div id="tasklist_wrap" class="tasklist-wrap">
+                </div>
+            </div>
+            <div id="kb_sub_scroll" class="sub-tasklist-scroll position-relative">
+                <div id="sub-tasklist_wrap" class="sub-tasklist-wrap w-">
+                </div>
+            </div>
+
+        </div>
+{#        <div class="tab-pane fade" id="tab_list">#}
+{#            <div class="list_task_wrap">#}
+{#                <table id="table_task_list" class="table nowrap table-advance w-100">#}
+{#                </table>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="tab-pane fade" id="tab_gantt">#}
+{#            <div class="gantt_table"></div>#}
+{#        </div>#}
+    </div>
+    <div class="btn-task-bar" style="display: none;">
+        <button type="button" class="btn btn-primary btn-rounded w-200p" id="btn_load-more">{% trans 'Load more' %}</button>
+    </div>
+    <div class="hidden">
+        <div class="card-parent_template">
+            <div class="card card-simple card-border tasklist">
+                <div class="card-header card-header-action">
+                    <div class="tasklist-handle">
+                        <h6 class="text-uppercase fw-bold d-flex align-items-center mb-0">
+                            <span class="tasklist-name"></span><span
+                                class="task-count"></span></h6>
+                        <div class="card-action-wrap">
+                            <button class="btn btn-flush-primary btn-animated btn-add-newtask">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="" class="wrap-child">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-child_template">
+            <div class="card card-border card-simple tasklist-card">
+                <div class="card-header card-header-action">
+                    <h6 class="fw-bold card-code"></h6>
+                    <label for="#" class="card-ticket" title="{% trans 'Percent completed' %}">
+                        <span></span>%</label>
+                    <div class="card-action-wrap">
+                        <a class="btn btn-flush-dark flush-soft-hover dropdown-toggle no-caret"
+                           href="#" data-bs-toggle="dropdown">
+                            <span class="icon">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item del-task-act" href="#"><span>{% trans 'Delete' %}</span></a>
+                            <a class="dropdown-item log-task-act" href="#logWorkModal">
+                                <span>{% trans 'Log time' %}</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="mb-2 d-flex">
+                        <div class="card-priority d-inline-block mr-2"></div>
+                        <a href="#" class="card-title" title></a>
+                    </div>
+                    <div class="avatar avatar-rounded avatar-xs" data-toggle="tooltip" title="">
+                        <span class="initial-wrap">
+                            <img src="" alt="user" class="avatar-img">
+                        </span>
+                    </div>
+                </div>
+                <div class="card-footer text-muted justify-content-between">
+                    <div>
+                        <span class="task-counter">
+                            <i class="fa-regular fa-square-check"></i>&nbsp;
+                            <span class="checklist_progress">0/0</span>
+                        </span>
+                        <span class="task-discuss">
+                            {% trans 'Sub' %}&nbsp;
+                            <span class="sub_task_count circle bg-blue text-white"><small>0</small></span>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="task-deadline">22 Sep, 22</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="priority-badges">
+            <div class="badge-icon badge-icon-xxs">
+                <div class="badge-icon-wrap"></div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="polygon" viewBox="0 0 127 139.4">
+                    <g data-name="Polygon 7" transform="translate(119 5.675)rotate(90)" fill="currentColor">
+                        <path d="M87.3 115L40.7 115C37.3 115 34 114.1 31.2 112.5 28.3 110.8 25.9 108.4 24.2 105.5L0.9 65C-0.8 62.1-1.7 58.8-1.7 55.5 -1.7 52.2-0.8 48.9 0.9 46L24.2 5.5C25.9 2.6 28.3 0.2 31.2-1.5 34-3.1 37.3-4 40.7-4L87.3-4C90.7-4 94-3.1 96.8-1.5 99.7 0.2 102.1 2.6 103.8 5.5L127.1 46C128.8 48.9 129.7 52.2 129.7 55.5 129.7 58.8 128.8 62.1 127.1 65L103.8 105.5C102.1 108.4 99.7 110.8 96.8 112.5 94 114.1 90.7 115 87.3 115Z"/>
+                        <path d="M40.7 0C35.3 0 30.3 2.9 27.7 7.5L4.3 48C1.6 52.6 1.6 58.4 4.3 63L27.7 103.5C30.3 108.1 35.3 111 40.7 111L87.3 111C92.7 111 97.7 108.1 100.3 103.5L123.7 63C126.4 58.4 126.4 52.6 123.7 48L100.3 7.5C97.7 2.9 92.7 0 87.3 0L40.7 0M40.7-8L87.3-8C95.5-8 103.2-3.6 107.3 3.5L130.6 44C134.7 51.1 134.7 59.9 130.6 67L107.3 107.5C103.2 114.6 95.5 119 87.3 119L40.7 119C32.5 119 24.8 114.6 20.7 107.5L-2.6 67C-6.7 59.9-6.7 51.1-2.6 44L20.7 3.5C24.8-3.6 32.5-8 40.7-8Z"
+                              fill="currentColor"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+        <input type="text" id="url-factory" data-task-list="{% url 'OpportunityTaskListAPI' %}"
+               data-task-detail="{% url 'OpportunityTaskDetailAPI' 1 %}"
+               data-logtime="{% url 'OpportunityTaskLogTimeAPI' %}"
+               data-change-stt="{% url 'OpportunityTaskStatusAPI' %}"
+               data-task-has-group="{% url 'OpportunityTaskHasGroupListAPI' %}"
+        />
+        <input type="text" id="trans-factory" data-name="{% trans 'Name' %}" data-assigner="{% trans 'Assigner' %}"
+               data-assignee="{% trans 'Assignee' %}" data-priority="{% trans 'Priority' %}"
+               data-st-date="{% trans 'Start date' %}" data-ed-date="{% trans 'End date' %}"
+               data-low="{% trans 'Low' %}"
+               data-med="{% trans 'Medium' %}"
+               data-hig="{% trans 'High' %}"
+        >
+        {{ data.task_config|json_script:'task_config' }}
+    </div>
+{#    {% include 'sales/task/extend/task-form.html' with has_prj=True %}#}
+{% endblock %}
+{% block jsFooter %}
+    <script src="{% static 'vendors/ckeditor/ckeditor.js' %}"></script>
+    <script src="{% static 'vendors/gantt/jquery.fn.gantt.js' %}"></script>
+    <script src="{% static 'vendors/flatpickr/flatpickr.min.js' %}"></script>
+    {% if base.language == 'vi' %}
+        <script src="{% static 'vendors/flatpickr/i18n/vn.js' %}"></script>
+    {% endif %}
+    <script src="{% static 'assets/js/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'vendors/dragula/dragula.min.js' %}"></script>
+
+    <script src="{% static 'assets/sales/task/js/extend/common_task.js' %}"></script>
+
+    <script src="{% static 'assets/sales/task/js/extend/create-task.js' %}"></script>
+    <script src="{% static 'assets/sales/task/js/list.js' %}"></script>
+    <script>
+        $('#btn-open-comment-task').on('click', function () {
+            let frmOppTask = $('#formOpportunityTask');
+            if (frmOppTask.length > 0) {
+                let appIdx = "e66cfb5a-b3ce-4694-a4da-47618f53de4c";  // Application: task - OpportunityTask
+                let docIdx = frmOppTask.attr('data-id-loaded');
+                if (docIdx) {
+                    let modalEle = $('#CommentModal');
+                    new $x.cls.cmt(modalEle.find('.comment-group')).init(docIdx, appIdx)
+                    modalEle.modal('show');
+                } else {
+                    $.fn.notifyB({
+                        'description': `{% trans 'Document is not selected.' %}`,
+                    }, 'failure');
+                }
+            }
+        })
+    </script>
+{% endblock %}

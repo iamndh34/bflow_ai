@@ -1,0 +1,51 @@
+{% load i18n string_utils %}
+
+{% random_str 10 True as id_modal %}
+
+<div
+        class="modal fade modal-file-attribute" tabindex="-1"
+        role="dialog" aria-labelledby="fileAttributeModal"
+        data-url-detail="{% url 'AttachmentDetailAPI' 1 %}"
+>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><b>{% trans 'Edit attributes of file' %}</b></h5>
+                <button
+                        type="button"
+                        class="btn btn-icon btn-rounded btn-flush-light flush-soft-hover btn-lg"
+                        data-bs-dismiss="modal"
+                ><span class="icon"><i class="far fa-window-close"></i></span></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-4"><i class="fas fa-cube mr-2"></i><b class="file-name"></b></div>
+                <div class="form-group">
+                    <label class="form-label">{% trans 'Document type' %}</label>
+                    <select
+                            class="form-select file_attr_document_type"
+                            data-url="{% url 'DocumentTypeConfigListAPI' %}"
+                            data-method="GET"
+                            data-keyResp="document_type_list"
+                    ></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">{% trans 'Content group' %}</label>
+                    <select
+                            class="form-select file_attr_content_group"
+                            data-url="{% url 'ContentGroupListAPI' %}"
+                            data-method="GET"
+                            data-keyResp="content_group_list"
+                    ></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">{% trans 'Description' %}</label>
+                    <textarea class="form-control file_attr_remark" rows="4"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans 'Close' %}</button>
+                <button type="button" class="btn btn-primary btn-save" data-bs-dismiss="modal">{% trans 'Save' %}</button>
+            </div>
+        </div>
+    </div>
+</div>

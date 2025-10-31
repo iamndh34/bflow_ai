@@ -1,0 +1,51 @@
+{% load static i18n string_utils person_utils %}
+<!-- Top Navbar -->
+<div class="container-fluid">
+    <!-- Start Nav -->
+    <div class="nav-start-wrap">
+        <!-- Search -->
+        <form class="dropdown navbar-search" style="display: none; visibility: hidden;">
+            <div class="dropdown-toggle no-caret" data-bs-toggle="dropdown" data-dropdown-animation data-bs-auto-close="outside">
+                <a href="#" class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover  d-xl-none">
+                    <span class="icon"><span class="feather-icon"><i data-feather="search"></i></span></span>
+                </a>
+                <div class="input-group d-xl-flex d-none">
+                    <span class="input-affix-wrapper input-search affix-border">
+                        <input type="text" class="form-control  bg-transparent"
+                               data-navbar-search-close="false" placeholder="{% trans 'Search' %}..."
+                               aria-label="Search"
+                        >
+                        <span class="input-suffix"><span>/</span>
+                            <span class="btn-input-clear"><i class="bi bi-x-circle-fill"></i></span>
+                            <span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="dropdown-menu p-0">
+                <!-- Mobile Search -->
+                <div class="dropdown-item d-xl-none bg-transparent">
+                    <div class="input-group mobile-search">
+                        <span class="input-affix-wrapper input-search">
+                            <input type="text" class="form-control" placeholder="Search..." aria-label="Search">
+                            <span class="input-suffix">
+                                <span class="btn-input-clear"><i class="bi bi-x-circle-fill"></i></span>
+                                <span class="spinner-border spinner-border-sm input-loader text-primary" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </span>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <!--/ Mobile Search -->
+                <div data-simplebar class="dropdown-body p-2"></div>
+                <div class="dropdown-footer d-xl-flex d-none"><a href="#"><u></u></a></div>
+            </div>
+        </form>
+        <!-- /Search -->
+    </div>
+    <!-- /Start Nav -->
+</div>
+<!-- /Top Navbar -->

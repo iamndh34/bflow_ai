@@ -1,0 +1,119 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tags -->
+	{% include 'extends/systems/meta_header.html' %}
+
+	<!-- CSS -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <link
+            rel="stylesheet"
+            href="//fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700&amp;display=swap"
+    >
+    <style>
+        html, body {
+            color: rgb(32, 33, 36);
+            font: 400 16px/24px "Roboto", "Google Sans", "Roboto Mono", sans-serif;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            height: 100%;
+            margin: 0;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%
+        }
+    </style>
+</head>
+<body>
+   	<!-- Wrapper -->
+	<div class="hk-wrapper hk-pg-auth" data-footer="simple">
+		<!-- Top Navbar -->
+		<nav class="hk-navbar navbar navbar-expand-xl navbar-light fixed-top">
+			<div class="container-xxl">
+				<!-- Start Nav -->
+				<div class="nav-start-wrap">
+					<a class="navbar-brand" href="/">
+						<img class="brand-img d-inline-block" style="max-height: 30px;" src="{% static 'assets/images/brand/bflow/png/logo-bflow-orginal.png' %}" alt="brand" />
+					</a>
+				</div>
+				<!-- /Start Nav -->
+
+				<!-- End Nav -->
+				<div class="nav-end-wrap">
+					<ul class="navbar-nav flex-row">
+						<li class="nav-item nav-link py-0">
+						<button class="btn btn-sm btn-outline-light"><span><span class="icon"><span class="feather-icon"><i data-feather="help-circle"></i></span></span><span>{% trans 'Help & Support' %}</span></span></button>
+						</li>
+					</ul>	
+				</div>
+				<!-- /End Nav -->
+			</div>
+		
+		</nav>
+		<!-- /Top Navbar -->
+
+		<!-- Main Content -->
+		<div class="hk-pg-wrapper">
+			<!-- Page Body -->
+			<div class="hk-pg-body">
+				<!-- Container -->
+				<div class="container-xxl">
+					<!-- Row -->
+					<div class="row">
+						<div class="col-xl-7 col-lg-6 d-lg-block d-none">
+							<div class="auth-content py-md-0 py-8">
+								<div class="row">
+									<div class="col-xl-12 text-center">
+										<img src="{% static 'assets/images/systems/macaroni-delete-confirmaton.png' %}"  class="img-fluid w-sm-70 w-50" alt="login"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-5 col-lg-6 col-md-7 col-sm-10">
+							<div class="auth-content py-md-0 py-8">
+								<div class="w-100">
+									<div class="row">
+										<div class="col-xxl-9 col-xl-8 col-lg-11">
+											<h1 class="display-4 fw-bold mb-2">503</h1>
+											<p>{% trans 'Server is temporarily unable to handle the request. This may be due to the server being overloaded or down for maintenance.' %}</p>
+											<a href="/" class="btn btn-primary mt-4">{% trans 'Return to home' %}</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Row -->
+				</div>
+				<!-- /Container -->
+			</div>
+			<!-- /Page Body -->
+
+			<!-- Page Footer -->
+			{% include 'extends/systems/footer.html' %}
+			<!-- / Page Footer -->
+
+		</div>
+		<!-- /Main Content -->
+	</div>
+    <!-- /Wrapper -->
+
+	<!-- jQuery -->
+    <script src="{% static 'vendors/jquery/dist/jquery.min.js' %}"></script>
+
+    <!-- Bootstrap Core JS -->
+   	<script src="{% static 'vendors/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Fancy Dropdown JS -->
+    <script src="{% static 'assets/js/dropdown-bootstrap-extended.js' %}"></script>
+
+	<!-- Simplebar JS -->
+	<script src="{% static 'vendors/simplebar/dist/simplebar.min.js' %}"></script>
+	
+	<!-- Init JS -->
+	<script src="{% static 'assets/js/init.js' %}"></script>
+</body>
+</html>

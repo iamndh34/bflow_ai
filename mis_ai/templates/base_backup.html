@@ -1,0 +1,743 @@
+{% load static i18n compress string_utils person_utils %}
+<!DOCTYPE html>
+<html lang="{{ base.language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}{{ base.tenant_current_data.code|upper }}{% endblock %}
+        &#8901; {{ base.tenant_current_data|parsed_title_page|safe }}
+    </title>
+    <meta name="description" content="Management Information System"/>
+
+    <meta property="og:url" content="www.bflow.vn"/>
+    <meta property="og:type" content="website"/>
+    <meta
+            property="og:title"
+            content="{{ base.tenant_current_data.code|upper }} &#8901; {{ base.tenant_current_data|parsed_title_page|safe }}"
+    />
+    <meta property="og:description" content="Bflow - Giải pháp toàn diện cho doanh nghiệp"/>
+
+    <link rel="shortcut icon" href="{{ request.user.company_icon_uri }}">
+    <link rel="icon" href="{{ request.user.company_icon_uri }}" type="image/x-icon">
+    <meta property="og:image" content="{{ request.user.company_icon_uri }}"/>
+
+    <link href="{% static 'vendors/bootstrap@4.0.0/dist/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+    {% compress css %}
+        <!-- Data Table CSS -->
+        <link
+                href="{% static 'vendors/datatables.net-bs5/css/dataTables.bootstrap5.min.css' %}" rel="stylesheet"
+                type="text/css"
+        />
+        <link
+                href="{% static 'vendors/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css' %}"
+                rel="stylesheet" type="text/css"
+        />
+        <link
+                href="{% static 'vendors/datatables-advance/fixed-columns.css' %}"
+                rel="stylesheet" type="text/css"
+        />
+
+        <link href="{% static 'vendors/select2/dist/css/select2.min.css' %}" rel="stylesheet" type="text/css">
+        <link
+                href="{% static 'vendors/select2/dist/css/select2-bootstrap4.min.css' %}" rel="stylesheet"
+                type="text/css"
+        >
+        <link href="{% static 'vendors/sweetalert2/dist/sweetalert2.min.css' %}" rel="stylesheet" type="text/css">
+
+        <!-- Tour -->
+        <link href="{% static 'vendors/hopscotch/dist/css/hopscotch.min.css' %}" rel="stylesheet" type="text/css">
+
+        <!-- Dropify -->
+        <link href="{% static 'vendors/dropify/dist/css/dropify.min.css' %}" rel="stylesheet" type="text/css">
+    {% endcompress %}
+
+    <link rel="stylesheet" href="{% static 'assets/fonts/inter/Inter-VariableFont_slnt,wght.ttf' %}">
+    {% compress css %}
+        <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/loading-spinner.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/my-style.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/notify.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'assets/css/plugins/drawer.css' %}" rel="stylesheet" type="text/css">
+        <link
+                href="{% static 'assets/css/plugins/datatable/dist/css/table-advance-1.css' %}" rel="stylesheet"
+                type="text/css"
+        >
+        <link href="{% static 'vendors/timeline-me/jquery.timelineMe.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'vendors/timeline-me/timelineMe.custom.css' %}" rel="stylesheet" type="text/css">
+        <link
+                href="{% static 'vendors/dm-uploader/dist/css/jquery.dm-uploader.min.css' %}" rel="stylesheet"
+                type="text/css"
+        >
+        <link rel="stylesheet" href="{% static 'assets/css/base_and_head_system_right.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/page-content-always.css' %}">
+        {% if enable_page_content_css %}
+            <link rel="stylesheet" href="{% static 'assets/css/page-content-advance.css' %}">
+        {% endif %}
+        {% block cssHeader %}{% endblock %}
+    {% endcompress %}
+    {% block cssHeaderUncompress %}{% endblock %}
+
+    {% compress js %}
+        <script src="{% static 'vendors/jquery/dist/jquery.min.js' %}"></script>
+        <script src="{% static 'vendors/jquery-validate/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'assets/js/cdn-clone/jquery-validation/customize-add-method.js' %}"></script>
+        {% if is_ga_enabled %}
+            <script type="text/javascript">
+                window.dataLayer = window.dataLayer || [];
+
+                function gtag() {
+                    dataLayer.push(arguments);
+                }
+
+                gtag('js', new Date());
+
+                gtag('config', '{{ ga_config.code }}', {
+                    'user_id': `{{ base.username_auth }} {{ base.user_id }}`,
+                });
+            </script>
+        {% endif %}
+        {% block jsHeader %}{% endblock %}
+    {% endcompress %}
+    {% block jsHeaderUnCompress %}{% endblock %}
+</head>
+<body>
+
+<!-- Bubble -->
+<button
+        id="bubble-scrollToTop"
+        class="scrollToTop btn btn-sm btn-icon btn-rounded"
+        data-bs-toggle="tooltip"
+        title="{% trans 'Back to top' %}"
+>
+    <span class="icon">
+        <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g>
+                <path
+                        d="M4 2C3.44772 2 3 2.44772 3 3C3 3.55228 3.44772 4 4 4H20C20.5523 4 21 3.55228 21 3C21 2.44772 20.5523 2 20 2H4Z"
+                        fill="#ffffff"
+                />
+                <path
+                        d="M6.29289 13.7071C6.68342 14.0976 7.31658 14.0976 7.70711 13.7071L11 10.4142L11 21C11 21.5523 11.4477 22 12 22C12.5523 22 13 21.5523 13 21L13 10.4142L16.2929 13.7071C16.6834 14.0976 17.3166 14.0976 17.7071 13.7071C18.0976 13.3166 18.0976 12.6834 17.7071 12.2929L12.7071 7.29289C12.3166 6.90237 11.6834 6.90237 11.2929 7.29289L6.29289 12.2929C5.90237 12.6834 5.90237 13.3166 6.29289 13.7071Z"
+                        fill="#ffffff"
+                />
+            </g>
+        </svg>
+    </span>
+</button>
+<!-- // Bubble -->
+
+<!-- Wrapper -->
+<div
+        class="hk-wrapper"
+        data-layout="vertical"
+        data-layout-style="collapsed"
+        data-menu="light"
+        data-footer="simple"
+        data-hover="active"
+        data-navbar-style="collapsed"
+>
+    <p
+            style="display: none" id="get-menu-active" data-nav-menu="{{ nav.menu_id_current }}"
+            data-nav-tenant="{{ nav.space_code_current }}"
+    ></p>
+    {% include 'extends/top_nav.html' %}
+
+    <!-- Vertical Nav -->
+    <div class="hk-menu">
+        {% include 'extends/vertical_nav_brand.html' %}
+
+        {% include 'extends/vertical_nav_main_menu.html' %}
+    </div>
+    <div id="hk_menu_backdrop" class="hk-menu-backdrop"></div>
+    <!-- /Vertical Nav -->
+
+    <!-- Main Content -->
+    {% block fullBody %}
+        <div class="hk-pg-wrapper pb-0">
+            <div class="hk-pg-body py-0">
+                <div class="blogapp-wrap blogapp-sidebar-toggle">
+                    <div class="blogapp-content">
+                        <div class="blogapp-detail-wrap w-100">
+                            {% block blockBreadcrumb %}
+                                <header class="blog-header" style="height: var(--blog-header-height);">
+                                    <button class="btn btn-icon btn-rounded btn-flush-dark flush-soft-hover navbar-toggle d-xl-none">
+                                        <span class="icon">
+                                            <span class="feather-icon"><i data-feather="align-left"></i></span>
+                                        </span>
+                                    </button>
+                                    <div class="d-flex align-items-center">
+                                        <button class="btn mr-1 hidden" id="btn-show-breadcrumb"><i
+                                                class="fa-solid fa-bars"
+                                        ></i></button>
+                                        {% if icon_cls %}
+                                            <div class="d-flex align-items-center justify-content-center mr-2 p-1 w-35p h-35p border rounded-2 {{ icon_bg }}">
+                                                <i class="{{ icon_cls }} text-white fs-4"></i>
+                                            </div>
+                                        {% endif %}
+                                        <div id="breadcrumb-data">
+                                            {% include 'extends/breadcrumb.html' %}
+                                        </div>
+                                    </div>
+                                    <div
+                                            class="blog-options-wrap" id="idxPageAction"
+                                            style="display: flex; align-items: center;"
+                                    >
+                                        {% include 'extends/direct_btn_group.html' %}
+                                        <div class="{% if pk %}hidden{% endif %} mr-1" id="idxRealAction">
+                                            {% block pageAction %}{% endblock %}
+                                        </div>
+                                        <button
+                                                type="button"
+                                                class="hidden btn btn-icon btn-flush-dark btn-rounded flush-soft-hover"
+                                                id="btn-active-edit-zone-wf"
+                                        >
+                                            <span
+                                                    class="icon"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom"
+                                                    data-bs-original-title="{% trans 'Open edit in Zones' %}"
+                                            >
+                                                <i class="fa-solid fa-unlock"></i>
+                                            </span>
+                                        </button>
+                                        <div class="d-flex justify-content-between">
+                                            <button
+                                                    class="hidden btn-action-wf btn btn-outline-primary mr-1"
+                                                    type="submit"
+                                                    form=""
+                                                    data-value=""
+                                                    id="idxSaveInZoneWF"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom"
+                                                    title="{% trans 'Save edit zone' %}"
+                                            >{% trans 'Save' %}</button>
+                                            <button
+                                                    class="hidden btn-action-wf btn btn-outline-primary mr-1"
+                                                    type="submit"
+                                                    form=""
+                                                    data-wf-action=""
+                                                    id="idxSaveInZoneWFThenNext"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom"
+                                                    title="{% trans 'Save edit zone and approve' %}"
+                                            >{% trans 'Save and approve' %}</button>
+                                            <button
+                                                    type="button"
+                                                    class="hidden btn-action-wf btn btn-primary"
+                                                    data-value=""
+                                                    id="btnMainApprove"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom"
+                                                    title="{% trans 'Approval' %}"
+                                            >{% trans 'Approve' %}</button>
+                                        </div>
+                                        <div class="dropdown hidden">
+                                            <button
+                                                    aria-expanded="false" data-bs-toggle="dropdown"
+                                                    class="btn btn-default btn-icon btn-flush-dark btn-rounded flush-soft-hover"
+                                                    type="button"
+                                            >
+                                            <span
+                                                    class="icon"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom"
+                                                    data-bs-original-title="{% trans 'More actions' %}"
+                                            >
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </span>
+                                            </button>
+                                            <div role="menu" class="dropdown-menu dropdown-bordered" id="idxGroupAction">
+                                                {% for key, value in base_workflow.items %}
+                                                    <li class="hidden btn-action-wf" data-value="{{ key }}">
+                                                        <div class="dropdown-item"><i
+                                                                class="icon-action-wf mr-1 {{ value.1 }}"
+                                                        ></i> {{ value.0 }}</div>
+                                                    </li>
+                                                {% endfor %}
+                                            </div>
+                                            {% if base_workflow.length > 0 %}
+                                                {% csrf_token %}
+                                            {% endif %}
+                                        </div>
+                                        <button
+                                                id="btnLogShow"
+                                                class="hidden btn btn-icon btn-rounded bg-dark-hover mr-1 ntt-drawer-toggle-link"
+                                                data-drawer-target="#drawer_log_data"
+                                                data-drawer-active="false"
+                                                href="#"
+                                                data-bs-toggle="tooltip"
+                                                data-bs-placement="bottom"
+                                                data-bs-original-title="{% trans 'Log' %}"
+                                                data-url-runtime-detail="{% url 'FlowRuntimeDetailAPI' pk=1 %}"
+                                                data-url-current-wf="{% url 'WorkflowCurrentOfAppListAPI' %}"
+                                                data-url-app-emp-config="{% url 'AppEmpConfigListAPI' %}"
+                                        >
+                                            <span class="icon icon-xs">
+                                                <i class="fas fa-history fa-sm"></i>
+                                            </span>
+                                        </button>
+                                        <div>
+                                            <div class="v-separator d-lg-inline-block d-none"></div>
+                                            {% include 'extends/head_system_right.html' %}
+                                        </div>
+                                    </div>
+                                    <div class="hk-sidebar-togglable active"></div>
+                                </header>
+                            {% endblock %}
+                            <div class="blog-body">
+                                <div id="idxPageContent">
+                                    {% block pageContent %}
+                                    {% endblock %}
+                                </div>
+                            </div>
+                            <div class="blog-utility">
+                                <!-- /Message translate base -->
+                                {% include 'trans.html' %}
+                                <!-- /Message translate base -->
+
+                                <!-- Some data in single page | please override block in feature template-->
+                                <div class="hidden">
+                                    <!-- Render Company Config and some json -->
+                                    {% if data.input_mapping_properties %}
+                                        {{ data.input_mapping_properties|json_script:"input_mapping_properties" }}
+                                    {% endif %}
+                                    {{ config|json_script:"idConfigValue" }}
+                                    <!-- // Render Company Config and some json -->
+
+                                    {% block dataHiddenGroup %}{% endblock %}
+                                </div>
+                                <!-- // Some data in single page | please override block in feature template-->
+
+                                <!-- Drawer Log and Activity -->
+                                {% include "extends/utility/drawer_log.html" %}
+                                <!-- // Drawer Log and Activity -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    <!-- /Main Content -->
+</div>
+<!-- /Wrapper -->
+
+<!-- Modal -->
+<!-- Raise a ticket -->
+{% include "extends/utility/raise_ticket.html" %}
+<!-- // Raise a ticket -->
+<!-- Some plugin import to base -->
+{% include 'extends/extends_of_base.html' %}
+<!-- // Some plugin import to base -->
+<div class="idxModalData">
+{% block modalData %}{% endblock %}
+</div>
+<!-- /Modal -->
+
+{% block jsCatalog %}
+    {% if jsi18n %}
+        <script src="{% url 'javascript-catalog' packages=jsi18n %}"></script>
+    {% else %}
+        <script src="{% url 'javascript-catalog' packages='null' %}"></script>
+    {% endif %}
+{% endblock %}
+
+{% compress js %}
+    <!-- Bootstrap Core JS -->
+    <script src="{% static 'vendors/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- // Bootstrap Core JS -->
+
+    <!-- FeatherIcons JS -->
+    <script src="{% static 'assets/js/feather.min.js' %}"></script>
+    <!-- // FeatherIcons JS -->
+
+    <!-- Fancy Dropdown JS -->
+    <script src="{% static 'assets/js/dropdown-bootstrap-extended.js' %}"></script>
+    <!-- // Fancy Dropdown JS -->
+
+    <!-- Simplebar JS -->
+    <script src="{% static 'vendors/simplebar/dist/simplebar.min.js' %}"></script>
+    <!-- // Simplebar JS -->
+
+    <!-- Data Table JS -->
+    <script src="{% static 'vendors/datatables.net/js/jquery.dataTables.min.v1.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-bs5/js/dataTables.bootstrap5.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-select/js/dataTables.select.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables-advance/fixed-columns.js' %}"></script>
+    <!-- // Data Table JS -->
+
+    <!-- Timeline ME -->
+    <script src="{% static 'vendors/timeline-me/jquery.timelineMe.js' %}"></script>
+    <script src="{% static 'vendors/timeline-me/timelineMe.custom.js' %}"></script>
+    <!-- // Timeline ME -->
+
+    <!-- Select2 JS -->
+    <script src="{% static 'vendors/select2/dist/js/select2.full.min.js' %}"></script>
+    <!-- // Select2 JS -->
+
+    <!-- Sweet Alert 2 -->
+    <script src="{% static 'vendors/sweetalert2/dist/sweetalert2.min.js' %}"></script>
+
+    <!-- Tour -->
+    <script src="{% static 'vendors/hopscotch/dist/js/hopscotch.min.js' %}"></script>
+
+    <!-- Init JS -->
+    <script src="{% static 'assets/js/plugins/drawer.js' %}"></script>
+    <script src="{% static 'assets/js/notify.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap-notify.min.js' %}"></script>
+
+    <script type="application/javascript">
+        // all variable data global with CONST!! --> keep don't change value of variable
+        const globeLanguage = $('html').attr('lang');
+        const globeApiStatusOfRender = "{{ data.render_api_status }}";
+        const globeUrlNotDeny = ['/log/notify/me/count'];
+        const globePK = "{{ pk }}";
+        const globeMediaDomain = "{{ base.domain_cloud }}";
+        const globePrefixAvatar = "{{ base.avatar_prefix }}";
+        const globeIsDebug = "{{ is_debug }}";
+        const staticStart = "{% static '' %}";
+
+        // url
+        const globeUrlCompanyConfig = "{% url 'CompanyConfigDetailAPI' %}";
+
+        // DataTable
+        const globeDTBLanguageConfig = "{% if base.language == 'en' %}{% static 'assets/js/cdn-clone/datatable/i18n/en.json' %}{% else %}{% static 'assets/js/cdn-clone/datatable/i18n/vi.json' %}{% endif %}";
+
+        // gateway
+        const globeGatewayMiddleListView = "{% url 'GatewayMiddleListView' plan='_plan_' app='_app_' %}";
+        const globeGatewayMiddleDetailView = "{% url 'GatewayMiddleDetailView' plan='_plan_' app='_app_' pk='_pk_' %}";
+        const globeGatewayPKMiddleDetailView = "{% url 'GatewayPKMiddleDetailView' pk_app='__pk_app__' pk_doc='__pk_doc__' %}"
+        const globeGatewayViewNameListView = "{% url 'GatewayViewNameListView' %}";
+        const globeGatewayViewNameParseView = "{% url 'GatewayViewNameParseView' view_name='_view_name_' %}";
+
+        // attachment
+        const globeUrlAttachmentUpload = "{% url 'AttachmentUpload' %}";
+
+        // workflow
+        const globeTaskDetail = "{% url 'FlowRuntimeTaskDetailAPI' pk=1 %}";
+        const globeFormMappedZone = "{% if data.form_id %}{{ data.form_id }}{% endif %}";
+        const globeRuntimeAfterFinishDetail = "{% url 'FlowRuntimeAfterFinishDetailAPI' pk=1 %}";
+
+        //
+        const globeFileNotFoundImg = "{% static 'assets/images/systems/file-not-found.png' %}";
+        const globeAvatarNotFoundImg = "{% static 'assets/images/systems/person-avt.png' %}";
+
+        // diagram
+        const globeDiagramList = "{% url 'DiagramListAPI' %}";
+    </script>
+
+    <!-- Moment JS -->
+    <script src="{% static 'vendors/moment/min/moment.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/moment-upgrade/moment-locales-upgrade-vi-en.js' %}"></script>
+    <script>
+        moment.locale(globeLanguage.trim());
+    </script>
+    <!-- // Moment JS -->
+
+    <script src="{% static 'assets/js/init.js' %}"></script>
+    {% if base.language == 'vi' %}
+        <script src="{% static 'assets/js/cdn-clone/select2/i18n/vi-1.js' %}"></script>
+        <script src="{% static 'assets/js/cdn-clone/jquery-validation/localization/message_vi.js' %}"></script>
+    {% else %}
+        <script src="{% static 'assets/js/cdn-clone/select2/i18n/en.js' %}"></script>
+    {% endif %}
+    <script src="{% static 'assets/js/cdn-clone/select2/init-select2.js' %}"></script>
+    <script src="{% static 'assets/js/chips-init.js' %}"></script>
+    <script src="{% static 'vendors/jquery-mockjax_2.6.0/jquery.mockjax.min.js' %}"></script>
+    <script src="{% static 'assets/js/extends/the-documents/bastion_field.js' %}"></script>
+    <script src="{% static 'assets/js/init-setup.js' %}"></script>
+    <script src="{% static 'assets/js/init-loader.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/card-tools.js' %}"></script>
+    <script src="{% static 'vendors/dm-uploader/src/js/jquery.dm-uploader.js' %}"></script>
+
+    <script src="{% static 'vendors/dropify/dist/js/dropify.min.js' %}"></script>
+    <!-- // Init JS -->
+
+    <script type="application/javascript">
+        let isDenied = false;
+        switch (globeApiStatusOfRender) {
+            case "1401":
+                isDenied = true;
+                WindowControl.showUnauthenticated();
+                break;
+            case "1403":
+                isDenied = true;
+                WindowControl.showForbidden();
+                break;
+            case "1404":
+                isDenied = true;
+                WindowControl.showNotFound();
+                break;
+            case "1500":
+                isDenied = true;
+                WindowControl.showSVErrors();
+                break;
+        }
+        $(window).on("load", function () {
+            if (!$('#menu-tenant').attr('data-space-selected')) {
+                hopscotch.startTour({
+                    id: "hopscotch-light",
+                    steps: [
+                        {
+                            target: "menu-tenant",
+                            placement: 'bottom',
+                            title: "{% trans 'Choose a space menus' %}",
+                            content: "{% trans 'Each Space has different menus.' %}",
+                        },
+                    ],
+                    showPrevButton: true,
+                });
+            }
+        });
+
+        function checkSizeScreen() {
+            let wWidth = $(window).width();
+            if (wWidth < 768) {
+                let realActionEle = $('#idxRealAction');
+                realActionEle.find('.icon').parent('span').each(function () {
+                    let spanShowEle = $(this).children('span:not(.icon)');
+                    $(this).attr('data-bs-toggle', 'tooltip');
+                    $(this).attr('data-bs-placement', 'bottom');
+                    $(this).attr('title', spanShowEle.text());
+                    spanShowEle.remove();
+                });
+                $('#btn-show-breadcrumb').addClass('hidden');
+                $('#breadcrumb-data').addClass('hidden');
+            }
+            if (wWidth < 350) {
+                $('#menu-tenant-text').text("_");
+            }
+        }
+
+        checkSizeScreen();
+
+        $(window).on("resize", function () {
+            checkSizeScreen();
+        })
+
+        {# Auto init select2 #}
+        $(document).ready(function () {
+            $('.auto-init-select2').each(function () {
+                if ($(this).data('url')) {
+                    $(this).initSelect2();
+                }
+            });
+
+            // set css of Modal fit screen display
+            $('.modal').on('show.bs.modal', function () {
+                const outsideFrame = $('.hk-pg-wrapper').css('padding-top');
+                $(this).css('margin-top', outsideFrame).css('height', `calc(100vh - ${outsideFrame})`);
+            })
+
+            //
+            $('button[type=submit]').on('click', function (e) {
+                let frmID = $(this).attr('form');
+                const avtiveElement = $(document.activeElement).closest('.dataTables_filter').length
+                if (avtiveElement === 1) return false
+                if (frmID) {
+                    $(this).prop('disabled', true);
+                    setTimeout(() => $(this).prop('disabled', false), 1000);
+                    $('#' + frmID).trigger('submit');
+                } else {
+                    let formOutSide = $(this).closest('form');
+                    if (formOutSide.length > 0) {
+                        $(this).prop('disabled', true);
+                        setTimeout(() => $(this).prop('disabled', false), 1000);
+                        formOutSide.trigger('submit');
+                    }
+                }
+            })
+            $('button:not([type])').on('click', function () {
+                let formOutSide = $(this).closest('form');
+                if (formOutSide.length > 0) {
+                    $(this).prop('disabled', true);
+                    setTimeout(() => $(this).prop('disabled', false), 1000);
+                    formOutSide.trigger('submit');
+                }
+            })
+
+            // warning not link employee | not company
+            let eleDataBase = $('#data-current-base');
+            if (eleDataBase.length > 0) {
+                let hasCompanyList = eleDataBase.attr('data-has-company-list') === 'true';
+                let hasCurrentCompany = eleDataBase.attr('data-has-current-company') === 'true';
+                let hasCurrentEmployee = eleDataBase.attr('data-has-current-employee') === 'true';
+                let urlAdminTenant = eleDataBase.attr('data-url-admin-tenant');
+                let urlAdminCompany = eleDataBase.attr('data-url-admin-company');
+
+                if (!hasCompanyList) {
+                    let msgTmp = $.fn.gettext("You do not belong to any company in the organization. Please contact the organization administrator to update the company information for you in the Tenant Administration section.");
+                    $.fn.callAjax2({
+                        url: urlAdminTenant,
+                        method: 'GET',
+                    }).then(
+                        resp => {
+                            let data = $.fn.switcherResp(resp);
+                            if (typeof data == 'object' && data.hasOwnProperty('user_admin_tenant')) {
+                                let userData = data['user_admin_tenant'];
+                                if (Array.isArray(userData)) {
+                                    let htmlTmp = `<p class="mb-1 mr-1">${$.fn.gettext('Admin')}:</p>`;
+                                    userData.map(
+                                        (item) => {
+                                            htmlTmp += `<span class="badge no-transform badge-primary mb-1 mr-1">${item?.['full_name'] || ''} - ${item?.['email'] || ''}</span>`
+                                        }
+                                    )
+                                    return htmlTmp;
+                                }
+                            }
+                            return '';
+                        },
+                        errs => '',
+                    ).then(
+                        msg => Swal.fire({
+                            title: $.fn.gettext("Some apps will not work correctly"),
+                            html: `<p>${msgTmp}</p><br/>${msg}`,
+                            icon: 'warning',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Ok',
+                            showDenyButton: false,
+                            denyButtonText: $.fn.transEle.attr('data-cancel'),
+                        })
+                    )
+                } else if (!hasCurrentCompany) {
+                    let msgTmp = $.fn.gettext("Please update the company information in the Current Company Switch section for your account.");
+                    Swal.fire({
+                        title: $.fn.gettext("Some apps will not work correctly"),
+                        html: `<p>${msgTmp}</p>`,
+                        icon: 'warning',
+                        showConfirmButton: true,
+                        confirmButtonText: $.fn.gettext("Goto switch current company"),
+                        showDenyButton: false,
+                        denyButtonText: $.fn.transEle.attr('data-cancel'),
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#btnChangeCurrentCompany').trigger('click');
+                        }
+                    })
+                } else if (!hasCurrentEmployee) {
+                    let msgTmp = $.fn.gettext("The account is not linked to an employee. Please contact the company administrator to update the employee information for the account.");
+                    $.fn.callAjax2({
+                        url: urlAdminCompany,
+                        method: "GET",
+                    }).then(
+                        resp => {
+                            let data = $.fn.switcherResp(resp);
+                            if (typeof data === 'object' && data.hasOwnProperty('employee_admin_company')) {
+                                let empData = data['employee_admin_company'];
+                                if (Array.isArray(empData)) {
+                                    let htmlTmp = `<p class="mb-1 mr-1">${$.fn.gettext('Admin')}:</p>`;
+                                    empData.map(
+                                        item => {
+                                            htmlTmp += `<span class="badge no-transform badge-primary mb-1 mr-1">${item?.['full_name'] || ''} - ${item?.['email'] || ''}</span>`
+                                        },
+                                    )
+                                    return htmlTmp;
+                                }
+                            }
+                            return '';
+                        },
+                        errs => '',
+                    ).then(
+                        msg => Swal.fire({
+                            title: $.fn.gettext("Some apps will not work correctly"),
+                            html: `<p>${msgTmp}</p><br/>${msg}`,
+                            icon: 'warning',
+                            showConfirmButton: true,
+                            confirmButtonText: "Ok",
+                        })
+                    )
+
+
+                } else {
+                }
+            }
+
+            // language
+            $('#link-language').on('click', function () {
+                let currentLanguage = $(this).attr('data-value');
+                let urlUpdateLanguage = $(this).attr('data-url');
+                let html = `
+                    <div class="d-flex justify-content-center">
+                        <select class="form-select w-250p" id="sel-change-language-to">
+                            <option value="vi" ${currentLanguage === 'vi' ? 'selected' : ''}>Tiếng Việt</option>
+                            <option value="en" ${currentLanguage === 'en' ? 'selected' : ''}>English</option>
+                        </select>
+                    </div>
+                `;
+                Swal.fire({
+                    title: "{% trans 'Change language to' %}",
+                    html: html,
+                    showCancelButton: true,
+                    confirmButtonText: "{% trans 'Yes, update it!' %}",
+                    cancelButtonText: "{% trans 'Cancel' %}",
+                    showLoaderOnConfirm: true,
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then(
+                    (result) => {
+                        if (result.isConfirmed) {
+                            $.fn.callAjax2({
+                                url: urlUpdateLanguage,
+                                method: 'PUT',
+                                data: {
+                                    'language': $('#sel-change-language-to').val(),
+                                },
+                                isLoading: true,
+                            }).then(
+                                (resp) => {
+                                    let data = $.fn.switcherResp(resp);
+                                    window.location.reload();
+                                }
+                            )
+                        }
+                    }
+                )
+            })
+        })
+
+        {# Bubble #}
+        $(function () {
+            let eleOnTop = $('#bubble-scrollToTop');
+            let docCheck = $('#idxPageContent .simplebar-content-wrapper');
+
+            $(docCheck).scroll(function () {
+                $(this).scrollTop() > 100 ? eleOnTop.fadeIn() : eleOnTop.fadeOut();
+            });
+
+            eleOnTop.click(function () {
+                docCheck.animate({scrollTop: 0}, "slow");
+                return false;
+            });
+        })
+    </script>
+
+    <!-- Customize JS -->
+    {% block jsFooter %}{% endblock %}
+    <!-- // Customize JS -->
+{% endcompress %}
+<!-- TinyMCE | Not compress because it depends on load another file -->
+<script src="{% static 'vendors/tinymce/tinymce.min.js' %}"></script>
+<script src="{% static 'vendors/tinymce/jquery.tinymce.min.js' %}"></script>
+<!-- // TinyMCE -->
+
+<!-- Firebase -->
+<script src="{% static 'firebase/handle_message.js' %}"></script>
+{{ fcm|json_script:"fcm" }}
+<script src="{% static 'firebase/foreground.js' %}" type="module"></script>
+<!-- // Firebase -->
+
+{% block jsFooterUnCompress %}{% endblock %}
+
+{% if is_ga_enabled %}
+    <script async src="{{ ga_config.script }}"></script>
+{% endif %}
+</body>
+</html>

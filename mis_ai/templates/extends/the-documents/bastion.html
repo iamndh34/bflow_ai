@@ -1,0 +1,297 @@
+{% load static i18n bastion_fields string_utils %}
+{% if has_opp == True or has_prj == True or has_inherit == True or has_process == True %}
+
+    {% if not opp_title %}{% trans 'Opportunity' as opp_title %}{% endif %}
+    {% if not prj_title %}{% trans 'Project' as prj_title %}{% endif %}
+    {% if not inherit_title %}{% trans 'Inheritor' as inherit_title %}{% endif %}
+    {% if not process_title %}{% trans 'Process' as process_title %}{% endif %}
+    {% if not process_stages_title %}{% trans 'Stages' as process_stages_title %}{% endif %}
+
+    {% override_list_form_app data.list_from_app new_list_from_app as resolve_list_from_app %}
+    {% override_list_form_app data.app_id new_list_from_app_id as resolve_list_from_app_id %}
+
+    {% get_or_default idx "bastionFieldTheDocument" as idx %}
+
+    <div
+            class=""
+            id="{{idx}}"
+
+            data-current-feature="{{ data.list_from_app }}"
+            data-current-app-id="{{ resolve_list_from_app_id }}"
+
+            {# Opp flag #}
+            data-has_opp="{{ has_opp|parse_0_or_1 }}"
+            data-opp_disabled="{{ opp_disabled|parse_0_or_1 }}"
+            data-opp_required="{{ opp_required|parse_0_or_1 }}"
+            data-opp_readonly="{{ opp_required|parse_0_or_1 }}"
+            data-opp_hidden="{{ opp_hidden|parse_0_or_1 }}"
+            data-opp_title="{{ opp_title }}"
+
+            {# Project flag #}
+            data-has_prj="{{ has_prj|parse_0_or_1 }}"
+            data-prj_disabled="{{ prj_disabled|parse_0_or_1 }}"
+            data-prj_required="{{ prj_required|parse_0_or_1 }}"
+            data-prj_readonly="{{ prj_required|parse_0_or_1 }}"
+            data-prj_hidden="{{ prj_hidden|parse_0_or_1 }}"
+            data-prj_title="{{ prj_title }}"
+
+            {# Inherit flag #}
+            data-has_inherit="{{ has_inherit|parse_0_or_1 }}"
+            data-inherit_disabled="{{ inherit_disabled|parse_0_or_1 }}"
+            data-inherit_required="{{ inherit_required|parse_0_or_1 }}"
+            data-inherit_readonly="{{ inherit_readonly|parse_0_or_1 }}"
+            data-inherit_hidden="{{ inherit_hidden|parse_0_or_1 }}"
+            data-inherit_title="{{ inherit_title }}"
+
+            {# Process flag #}
+            data-has_process="{{ has_process|parse_0_or_1 }}"
+            data-process_disabled="{{ process_disabled|parse_0_or_1 }}"
+            data-process_required="{{ process_required|parse_0_or_1 }}"
+            data-process_readonly="{{ process_readonly|parse_0_or_1 }}"
+            data-process_hidden="{{ process_hidden|parse_0_or_1 }}"
+            data-process_title="{{ process_title }}"
+    >
+        <div class="mb-2">
+            {% priority_app priority_app as list_priority_app %}
+            <h2 class="accordion-header hidden" id="bastion-field-heading">
+                <button
+                        class="accordion-button {% if is_open != True %} collapsed {% endif %}"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#bastion-field-collapse" aria-expanded="true"
+                        aria-controls="bastion-field-collapse"
+                        id="btnBastionField"
+                >
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-star mr-2 fs-5 {% if opp_required == True or prj_required == True or inherit_required == True or process_required == True %} text-yellow {% endif %}"></i>
+                        {% for item in list_priority_app %}
+                            {% if item == 'opp' %}
+                                {% if has_opp == True and opp_hidden != True %}
+                                    <span>
+                                        <span class="{% if opp_required == True %} required {% endif %}">
+                                            {{ opp_title }}
+                                        </span>
+                                    </span>
+                                {% endif %}
+                            {% elif item == 'prj' %}
+                                {% if has_prj == True and prj_hidden != True %}
+                                    <span>
+                                        <span class="{% if prj_required == True %} required {% endif %}">
+                                            {{ prj_title }}
+                                        </span>
+                                    </span>
+                                {% endif %}
+                            {% elif item == 'process' %}
+                                {% if has_process == True and process_hidden != True %}
+                                    <span>
+                                        <span class="{% if process_required == True %} required {% endif %}">
+                                            {{ process_title }}
+                                        </span>
+                                    </span>
+                                {% endif %}
+                            {% elif item == 'inherit' %}
+                                {% if has_inherit == True and inherit_hidden != True %}
+                                    <span>
+                                        <span class="{% if inherit_required == True %} required {% endif %}">
+                                            {{ inherit_title }}
+                                        </span>
+                                    </span>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </button>
+            </h2>
+            <div
+                    id="bastion-field-collapse"
+                    class="accordion-collapse collapse {% if is_open == True %}show {% endif %}"
+                    aria-labelledby="bastion-field-heading" data-bs-parent="#bastionFieldTheDocument"
+            >
+                <div class="row">
+                    <div class="container-fluid">
+                        {% if show_warning == True %}
+                            <div class="row mt-2">
+                                {% if show_warning_template %}
+                                    {% include show_warning_template %}
+                                {% else %}
+                                    <p>
+                                        <small
+                                                class="mr-1" style="color: #E4D02E"
+                                        > {% trans 'The picklists in this section will be affected by each other when the value of an item changes.' %}</small>
+                                        <small
+                                                class="mr-1" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                title="{% trans 'Go to the user manual page' %}"
+                                        >
+                                            <a href="#"><i class="fa-solid fa-circle-info"></i></a>
+                                        </small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        <div class="row mt-2">
+                            {% cls_name_of_bastion_field has_opp has_prj has_inherit has_process as clsNameBastionField %}
+
+                            {% for item in list_priority_app %}
+                                {% if item == 'opp' %}
+                                    {% if has_opp == True %}
+                                        <div class="{{ clsNameBastionField }}">
+                                            <div class="form-group">
+                                                <label
+                                                        for="opportunity_id"
+                                                        class="form-label {% if opp_required == True %} required {% endif %}"
+                                                >
+                                                    {{ opp_title }}
+                                                </label>
+                                                <div class="input-group">
+                                                    <select
+                                                            name="opportunity_id"
+                                                            id="opportunity_id"
+                                                            class="form-select {% if opp_hidden == True %} d-none {% endif %}"
+                                                            data-url="{% url 'OpportunityListAPI' %}"
+                                                            data-method="GET"
+                                                            data-keyResp="opportunity_list"
+                                                            data-params='{"list_from_app": "{{ resolve_list_from_app }}", "is_close_lost":"false", "is_deal_close":"false"}'
+                                                            data-keyText="code"
+
+                                                            data-url-info-detail="{% url 'OpportunityDetail' pk='__pk__' %}"
+                                                            data-on-load-info="onLoadDropdownInfoOpp"
+
+                                                            {% if opp_required == True %} required {% endif %}
+                                                            {% if opp_disabled == True %} disabled {% endif %}
+                                                            {% if opp_readonly == True %} readonly="" {% endif %}
+                                                    ></select>
+                                                    {% include 'extends/the-documents/button_info.html' %}
+                                                    {% include 'extends/the-documents/dropdown_info.html' with display_data_template="extends/the-documents/dropdown_info__opp.html" %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% elif item == 'process' %}
+                                    {% if has_process == True %}
+                                        <div class="{{ clsNameBastionField }}">
+                                            <div class="form-group">
+                                                <label
+                                                        for="process_id"
+                                                        class="form-label {% if process_required == True %} required {% endif %}"
+                                                >
+                                                    {{ process_title }}
+                                                </label>
+                                                <i class="fa-solid fa-caret-right text-light"></i>
+                                                <label
+                                                        for="process_stage_app_id"
+                                                        class="form-label {% if process_required == True %} required {% endif %}"
+                                                >
+                                                    {{ process_stages_title }}
+                                                </label>
+                                                <div class="input-group">
+                                                    <select
+                                                            name="process"
+                                                            id="process_id"
+                                                            class="form-select {% if process_hidden == True %} d-none {% endif %}"
+                                                            data-url="{% url 'ProcessRuntimeOfMeAPI' %}"
+                                                            data-method="GET"
+                                                            data-keyResp="process_runtime_list"
+                                                            data-keyText="title"
+                                                            data-allowClear="true"
+
+                                                            data-url-info-detail="{% url 'ProcessRuntimeDetailView' pk='__pk__' %}"
+                                                            data-on-load-info="onLoadDropdownInfoProcess"
+
+                                                            data-url-data-match="{% url 'ProcessRuntimeDataMatchAPI' %}"
+
+                                                            {% if process_required == True %} required {% endif %}
+                                                            {% if process_disabled == True %} disabled {% endif %}
+                                                            {% if process_readonly == True %} readonly="" {% endif %}
+                                                    ></select>
+                                                    <select
+                                                            name="process_stage_app"
+                                                            id="process_stage_app_id"
+                                                            class="form-select {% if process_hidden == True %} d-none {% endif %}"
+                                                            data-url="{% url 'ProcessStagesAppOfMeAPI' %}"
+                                                            data-method="GET"
+                                                            data-keyResp="process_runtime_stages_app_list"
+                                                            data-keyText="title"
+                                                            data-allowClear="true"
+                                                            {% if process_required == True %} required {% endif %}
+                                                            {% if process_disabled == True %} disabled {% endif %}
+                                                            {% if process_readonly == True %} readonly="" {% endif %}
+                                                    >
+                                                    </select>
+                                                    {% include 'extends/the-documents/button_info.html' %}
+                                                    {% include 'extends/the-documents/dropdown_info.html' with display_data_template="extends/the-documents/dropdown_info__process.html" %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% elif item == 'prj' %}
+                                    {% if has_prj == True %}
+                                        <div class="{{ clsNameBastionField }}">
+                                            <div class="form-group">
+                                                <label
+                                                        for="project_id"
+                                                        class="form-label {% if prj_required == True %} required {% endif %}"
+                                                >
+                                                    {{ prj_title }}
+                                                </label>
+                                                <select
+                                                        name="project_id"
+                                                        id="project_id"
+                                                        class="form-select {% if prj_hidden %} d-none {% endif %}"
+                                                        data-url="{% url 'ProjectListAPI' %}"
+                                                        data-method="GET"
+                                                        data-keyResp="project_list"
+                                                        data-params='{"list_from_app": "{{ resolve_list_from_app }}"}'
+                                                        data-keyText="code"
+                                                        {% if prj_required == True %} required {% endif %}
+                                                        {% if prj_disabled == True %} disabled {% endif %}
+                                                        {% if prj_readonly == True %} readonly {% endif %}
+                                                ></select>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% elif item == 'inherit' %}
+                                    {% if has_inherit == True %}
+                                        <div class="{% if has_prj == True %}col-xs-12{% else %}{{ clsNameBastionField }}{% endif %} wrap_task_inherit">
+                                            <div class="form-group">
+                                                <label
+                                                        for="employee_inherit_id"
+                                                        class="form-label {% if inherit_required == True %} required {% endif %}"
+                                                >
+                                                    {{ inherit_title }}
+                                                </label>
+                                                <div class="input-group">
+                                                    <select
+                                                            name="employee_inherit_id"
+                                                            id="employee_inherit_id"
+                                                            class="form-select {% if inherit_hidden %} d-none {% endif %}"
+                                                            data-url="{% url 'EmployeeListAPI' %}"
+                                                            data-params="{'is_active': true}"
+{#                                                            data-params='{}'#}
+                                                            data-keyResp="employee_list"
+                                                            data-keyText="full_name"
+
+                                                            data-url-info-detail="{% url 'EmployeeDetail' pk='__pk__' %}"
+                                                            data-on-load-info="onLoadDropdownInfoInherit"
+                                                            data-onload="{% data_onload_current_employee %}"
+{#                                                            {% if auto_select_current_employee == True %}#}
+{#                                                                data-onload="{% data_onload_current_employee %}"#}
+{#                                                            {% endif %}#}
+                                                            {% if inherit_required == True %} required {% endif %}
+                                                            {% if inherit_disabled == True %} disabled {% endif %}
+                                                            {% if inherit_readonly == True %} readonly="" {% endif %}
+                                                    ></select>
+                                                    {% include 'extends/the-documents/button_info.html' %}
+                                                    {% include 'extends/the-documents/dropdown_info.html' with display_data_template="extends/the-documents/dropdown_info__employee.html" %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,113 @@
+/* SPINNER LOADING */
+/* CSS cho marker loading */
+.hidden {
+    display: none !important;
+}
+
+.loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(229, 229, 229, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.my-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.my-circle {
+    width: 12px;
+    height: 12px;
+    background-color: #6B8E23;
+    border-radius: 50%;
+    margin-right: 5px;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+.my-circle-1 {
+    animation-name: my-spinner1;
+}
+
+.my-circle-2 {
+    animation-name: my-spinner2;
+}
+
+.my-circle-3 {
+    animation-name: my-spinner3;
+}
+
+.my-circle-4 {
+    animation-name: my-spinner4;
+}
+
+.my-circle-5 {
+    animation-name: my-spinner5;
+}
+
+@keyframes my-spinner1 {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    30% {
+        opacity: 0.0;
+        transform: scale(0);
+    }
+}
+
+@keyframes my-spinner2 {
+    15% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+@keyframes my-spinner3 {
+    35% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    70% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+@keyframes my-spinner4 {
+    55% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    90% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+@keyframes my-spinner5 {
+    75% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+/* --SPINNER LOADING */

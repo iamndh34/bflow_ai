@@ -1,0 +1,16 @@
+{% load i18n %}
+<div class="formset-toolbox text-right">
+	{% if frm.DELETE %}
+		<a href="javascript:void(0);" title="{% trans 'Remove Item' %}" data-{{ data_formset }}-delete>
+			<i class="bi bi-x-circle" aria-hidden="true"></i>
+		</a>
+	{% endif %}
+	{% if frm.ORDER %}
+		<a href="javascript:void(0);" title="{% trans 'Move Down' %}" data-{{ data_formset }}-move-down>
+			<i class="bi bi-arrow-down-circle" aria-hidden="true"></i>
+		</a>
+		<a href="javascript:void(0);" title="{% trans 'Move Up' %}" data-{{ data_formset }}-move-up>
+			<i class="bi bi-arrow-up-circle" aria-hidden="true"></i>
+		</a>
+	{% endif %}
+</div>

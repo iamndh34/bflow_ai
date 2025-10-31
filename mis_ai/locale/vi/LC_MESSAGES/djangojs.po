@@ -1,0 +1,574 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-05 00:08+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#
+msgid "Home Page"
+msgstr "Trang chủ"
+
+#
+msgid "Login page"
+msgstr "Trang đăng nhập"
+
+#
+msgid "Previous page"
+msgstr "Trang truớc"
+
+#
+msgid "Unlimited"
+msgstr "Không giới hạn"
+
+#
+msgid "The session login was expired"
+msgstr "Phiên đăng nhập đã hết hạn"
+
+#
+msgid "Failed to load resource"
+msgstr "Không tải được tài nguyên"
+
+#
+msgid "Not found"
+msgstr "Không tìm thấy"
+
+#
+msgid "Forbidden"
+msgstr "Không được phép"
+
+#
+msgid "Internal Server Errors"
+msgstr "Có lỗi xảy ra"
+
+#
+msgid "This image encountered an error during loading or does not exist"
+msgstr "Hình ảnh này gặp lỗi khi tải hoặc không tồn tại"
+
+#
+msgid "Maximum size {size}MiB"
+msgstr "Dung lượng tối đa {size}MiB"
+
+#
+msgid "Allows uploading multiple files"
+msgstr "Cho phép tải lên nhiều tệp"
+
+#
+msgid "File type not allowed for uploading"
+msgstr "Loại tệp tin không được phép"
+
+#
+msgid "It must be one of the following file types:"
+msgstr "Tệp tin phải là một trong các loại sau:"
+
+#
+msgid "This field is required"
+msgstr "Trường này là bắt buộc"
+
+#
+msgid "Successful"
+msgstr "Thành công"
+
+#
+msgid "Failed"
+msgstr "Thất bại"
+
+#
+msgid "Loading"
+msgstr "Đang tải"
+
+#
+msgid "Creating"
+msgstr "Đang tạo"
+
+#
+msgid "Updating"
+msgstr "Đang cập nhật"
+
+#
+msgid "Deleting"
+msgstr "Đang xoá"
+
+#
+msgid "Please wait"
+msgstr "Vui lòng đợi"
+
+#
+msgid "Some apps will not work correctly"
+msgstr "Một số ứng dụng sẽ không hoạt động"
+
+#
+msgid "You do not belong to any company in the organization. Please contact the organization administrator to update the company information for you in the Tenant Administration section."
+msgstr "Bạn không thuộc về bất kỳ công ty nào trong tổ chức. Vui lòng liên hệ với quản trị viên tổ chức để cập nhật thông tin công ty cho bạn trong phần Quản trị Tenant."
+
+#
+msgid "Please update the company information in the Current Company Switch section for your account."
+msgstr "Vui lòng cập nhật thông tin công ty trong phần chuyển đổi công ty hiện hành của tài khoản."
+
+#
+msgid "Goto switch current company"
+msgstr "Đi đến chuyển đổi công ty hiện hành"
+
+#
+msgid "The account is not linked to an employee. Please contact the company administrator to update the employee information for the account."
+msgstr "Tài khoản không được liên kết với nhân viên. Vui lòng liên hệ với quản trị viên công ty để cập nhật thông tin nhân viên cho tài khoản."
+
+#
+msgid "Admin"
+msgstr "Quản trị viên"
+
+#
+msgid "Unsaved changes?"
+msgstr "Thay đổi chưa được lưu?"
+
+#
+msgid "You have made changes."
+msgstr "Bạn đã thực hiện các thay đổi"
+
+#
+msgid "Do you want to discard them?"
+msgstr "Bạn có muốn hủy chúng không?"
+
+#
+msgid "Discard unsaved changes"
+msgstr "Loại bỏ thay đổi"
+
+#
+msgid "Close"
+msgstr "Đóng"
+
+#
+msgid "Copied"
+msgstr "Đã sao chép"
+
+#
+msgid "Update"
+msgstr "Cập nhật"
+
+#
+msgid "Are you sure you want to duplicate it?"
+msgstr "Bạn có muốn nhân bản chúng?"
+
+#
+msgid "Duplicate"
+msgstr "Nhân bản"
+
+#
+msgid "Successfully"
+msgstr "Thành công"
+
+#
+msgid "Once approved, you cannot undo it."
+msgstr "Khi đã phê duyệt, bạn không thể hoàn tác."
+
+#
+msgid "2FA verification request process"
+msgstr "Quy trình này yêu cầu xác minh hai bước (2FA)"
+
+#
+msgid "2FA verification page"
+msgstr "Trang xác minh hai bước (2FA)"
+
+#
+msgid "Today"
+msgstr "Hôm nay"
+
+#
+msgid "1 day ago"
+msgstr "1 ngày trước"
+
+#
+msgid "2 day ago"
+msgstr "2 ngày trước"
+
+#
+msgid "3 day ago"
+msgstr "3 ngày trước"
+
+#
+msgid "Request was throttled. Expected available in {time_sec} seconds."
+msgstr "Yêu cầu đã được điều tiết do lưu lượng bất thường. Dự kiến khả dụng sau {time_sec} giây."
+
+#
+msgid "Request was throttled"
+msgstr "Yêu cầu đã được điều tiết do lưu lượng bất thường"
+
+#
+msgid "Expected available in {time_sec} seconds"
+msgstr "Dự kiến khả dụng sau {time_sec} giây"
+
+#
+msgid "a few"
+msgstr "vài"
+
+#
+msgid "Stages"
+msgstr "Giai đoạn"
+
+#
+msgid "Save"
+msgstr "Lưu"
+
+#
+msgid "Title"
+msgstr "Tiêu đề"
+
+#
+msgid "Remarks"
+msgstr "Mô tả"
+
+#
+msgid "Application"
+msgstr "Ứng dụng"
+
+#
+msgid "The minimum number of documents created"
+msgstr "Số phiếu tối thiểu được tạo ra"
+
+#
+msgid "The maximum number of documents created"
+msgstr "Số phiếu tối đa được tạo ra"
+
+#
+msgid "You are being redirected to the feature creation page."
+msgstr "Bạn đang được điều hướng đến trang tạo của tính năng."
+
+#
+msgid "Redirect now"
+msgstr "Chuyển hướng ngay"
+
+#
+msgid "Number of documents created"
+msgstr "Số phiếu đã được tạo ra"
+
+#
+msgid "Number of documents approved"
+msgstr "Số phiếu đã được phê duyệt"
+
+#
+msgid "Click to create more documents"
+msgstr "Nhấn vào đây để tạo thêm phiếu"
+
+#
+msgid "Click to confirm complete"
+msgstr "nhấn vào đây để xác nhận hoàn thành"
+
+#
+msgid "Are you sure you have confirmed its completion?"
+msgstr "Bạn có chắc chắn đã xác nhận hoàn tất không?"
+
+#
+msgid "Are you sure remove it?"
+msgstr "Bạn có chắc chắn loại bỏ nó?"
+
+#
+msgid "Retrieving Opportunity Data that has been linked to Process"
+msgstr "Đang truy xuất dữ liệu Cơ hội Kinh Doanh đã được liên kết với Tiến trình"
+
+#
+msgid "Delete Item"
+msgstr "Xóa mục này"
+
+#
+msgid "Do you really want to delete this item"
+msgstr "Bạn có thực sự muốn xóa mục này"
+
+#
+msgid "Confirm"
+msgstr "Xác nhận"
+
+#
+msgid "Cancel"
+msgstr "Huỷ bỏ"
+
+#
+msgid "Delete item successfully"
+msgstr "Xoá thành công"
+
+#
+msgid "Create manually"
+msgstr "Tạo thủ công"
+
+#
+msgid "Create automatically"
+msgstr "Tạo tự động"
+
+#
+msgid "Bank"
+msgstr "Ngân hàng"
+
+#
+msgid "Vietnamese Name"
+msgstr "Tên tiếng việt"
+
+#
+msgid "English Name"
+msgstr "Tên tiếng anh"
+
+#
+msgid "Full Address"
+msgstr "Địa chỉ đầy đủ"
+
+#
+msgid "City"
+msgstr "Thành phố"
+
+#
+msgid "Update Bank"
+msgstr "Cập nhật ngân hàng"
+
+#
+msgid "Update Address"
+msgstr "Cập nhật địa chỉ"
+
+#
+msgid "Bank Account"
+msgstr "Tài khoản ngân hàng"
+
+#
+msgid "Account Number"
+msgstr "Số tài khoản"
+
+#
+msgid "Brand Name"
+msgstr "Tên chi nhánh"
+
+#
+msgid "Bank Abbreviation"
+msgstr "Tên viết tắt ngân hàng"
+
+#
+msgid "Bank Name"
+msgstr "Tên ngân hàng"
+
+#
+msgid "Bank Owner"
+msgstr "Người sở hữu"
+
+#
+msgid "Brand"
+msgstr "Chi nhánh"
+
+#
+msgid "Brand Full Address"
+msgstr "Địa chỉ chi nhánh"
+
+#
+msgid "please select Start date and Room to continue"
+msgstr "Vui lòng chọn Ngày bắt đầu và Phòng họp để tiếp tục"
+
+#
+msgid "This room is unavailable at this time"
+msgstr "Phòng này không có sẵn vào lúc này"
+
+#
+msgid "Save changes"
+msgstr "Lưu thay đổi"
+
+#
+msgid "You do not have permission to access this function!"
+msgstr "Bạn không có quyền truy cập chức năng này!"
+
+#
+msgid "The requested content was not found!"
+msgstr "Không tìm thấy nội dung được yêu cầu!"
+
+#
+msgid "You will be logged out!"
+msgstr "Bạn sẽ bị đăng xuất!"
+
+#
+msgid "An error occurred while interacting with the data!"
+msgstr "Có lỗi xảy ra khi tương tác với dữ liệu!"
+
+#
+msgid "Inventory tab is not allowed for Service product. Turn off Inventory tab first."
+msgstr "Tab Tồn kho không có sẵn cho Sản phẩm Dịch vụ. Hãy tắt Tab Tồn kho trước."
+
+#
+msgid "VAT"
+msgstr "Thuế GTGT"
+
+#
+msgid "value"
+msgstr "giá trị"
+
+#
+msgid "Invoiced"
+msgstr "Đã lập hóa đơn"
+
+#
+msgid "No group"
+msgstr "Không có phòng ban"
+
+#
+msgid "Export to Excel"
+msgstr "Xuất dữ liệu ra Excel"
+
+#
+msgid "Auto-generate if blank (based on config)"
+msgstr "Chế độ tự sinh (theo cấu hình) nếu để trống"
+
+#
+msgid "Default"
+msgstr "Mặc định"
+
+#
+msgid "input UOM..."
+msgstr "nhập đơn vị..."
+
+#
+msgid "Bank name"
+msgstr "Tên ngân hàng"
+
+#
+msgid "Account name"
+msgstr "Tên tài khoản"
+
+#
+msgid "Account number"
+msgstr "Số tài khoản"
+
+#
+msgid "Expense type"
+msgstr "Loại chi phí"
+
+#
+msgid "Unit price"
+msgstr "Đơn giá"
+
+#
+msgid "Available"
+msgstr "Khả dụng"
+
+#
+msgid "Converted value"
+msgstr "Giá trị chuyển đổi"
+
+#
+msgid "Total"
+msgstr "Tổng cộng"
+
+#
+msgid "Warehouse"
+msgstr "Kho"
+
+#
+msgid "Serial number"
+msgstr "Số serial"
+
+#
+msgid "Component name"
+msgstr "Tên thành phần"
+
+#
+msgid "Description"
+msgstr "Mô tả"
+
+#
+msgid "Created Goods Issue"
+msgstr "Đã tạo phiếu Xuất Hàng"
+
+#
+msgid "Created Goods Receipt"
+msgstr "Đã tạo phiếu Nhập Hàng"
+
+#
+msgid "None Group"
+msgstr "Không có nhóm"
+
+#
+msgid "In each row, the first input is Revenue, the next one is Profit"
+msgstr "Ở mỗi dòng, ô đầu tiên là Doanh thu, ô tiếp theo là Lợi nhuận"
+
+#
+msgid "This action can not be undo!"
+msgstr "Hành động này không thể hoàn tác!"
+
+#
+msgid "Code"
+msgstr "Mã"
+
+#
+msgid "Add Container Type"
+msgstr "Thêm Loại Container"
+
+#
+msgid "Update Container Type"
+msgstr "Cập Nhật Loại Container"
+
+#
+msgid "Add Package Type"
+msgstr "Thêm Loại Kiện Hàng"
+
+#
+msgid "Update Package Type"
+msgstr "Cập nhật loại hàng"
+
+#
+msgid "Ordered"
+msgstr "Đã đặt hàng"
+
+#
+msgid "Requested"
+msgstr "Đã yêu cầu"
+
+#
+msgid "Remain"
+msgstr "Còn lại"
+
+#
+msgid "is inventory tracking"
+msgstr "có theo dõi tồn kho"
+
+#
+msgid "None"
+msgstr "Không"
+
+#
+msgid "Currency"
+msgstr "Loại tiền tệ"
+
+#
+msgid "Total Amount"
+msgstr "Tổng giá trị"
+
+#
+msgid "Action"
+msgstr "Thao tác"
+
+#
+msgid "Specific serial number"
+msgstr "Serial đích danh"
+
+#
+msgid "Not available"
+msgstr "Không khả dụng"
+
+#
+msgid "Receipt"
+msgstr "Nhập hàng"
+
+#
+msgid "Dropship warehouse"
+msgstr "Kho dropship"
+
+#
+msgid "Virtual warehouse"
+msgstr "Kho ảo"
+
+#
+msgid "Use for Equipment Loan"
+msgstr "Dùng cho Mượn hàng"

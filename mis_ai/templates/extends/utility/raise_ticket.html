@@ -1,0 +1,126 @@
+{% load i18n %}
+<div
+        class="modal fade" id="modalRaiseTicket" tabindex="-1" role="dialog"
+        aria-labelledby="modalRaiseTicket"
+        aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form
+                    id="frm-send-a-ticket" data-url="{% url 'TicketErrorCreateAPI' %}"
+                    data-method="POST"
+                    enctype="multipart/form-data"
+            >
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">{% trans 'Raise a ticket' %}</h5>
+                    <button
+                            type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"
+                    >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- hidden input -->
+                    <div class="form-group hidden">
+                        <label
+                                for="ticket-email-auto" class="form-label"
+                        >{% trans 'Email' %}</label>
+                        <input
+                                class="form-control" type="text" id="ticket-email-auto"
+                                name="email"
+                                autocomplete="false"
+                        />
+                    </div>
+                    <div class="form-group hidden">
+                        <label
+                                for="ticket-location-raise-auto" class="form-label"
+                        >{% trans 'Location raise' %}</label>
+                        <input
+                                class="form-control" type="text"
+                                id="ticket-location-raise-auto"
+                                name="location_raise"
+                        />
+                    </div>
+                    <!-- hidden input -->
+                    <div class="form-group">
+                        <label
+                                for="ticket-email" class="form-label required"
+                        >{% trans 'Email' %}</label>
+                        <input
+                                class="form-control" type="email" id="ticket-email"
+                                name="email_input" required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label
+                                for="ticket-location-raise" class="form-label"
+                        >{% trans 'Location raise' %}</label>
+                        <input
+                                class="form-control" type="text" id="ticket-location-raise"
+                                name="location_raise_input"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label
+                                for="ticket-title" class="form-label required"
+                        >{% trans 'Title' %}</label>
+                        <input
+                                type="text" class="form-control" id="ticket-title"
+                                name="title"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label
+                                for="ticket-remarks" class="form-label required"
+                        >{% trans 'Descriptions' %}</label>
+                        <textarea
+                                class="form-control" id="ticket-remarks" name="remarks"
+                        ></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div id="ticket-attachment-preview">
+                        </div>
+                        <label
+                                for="ticket-attachments" class="form-label"
+                        >{% trans 'Attachments' %}</label>
+                        <input
+                                type="file" class="form-control" id="ticket-attachments"
+                                name="attachments" multiple
+                                accept="image/jpeg, image/png, image/gif"
+                        />
+                        <small class="text-muted">{% trans 'Accept type' %}: *.jpeg, *.png,
+                            *.gif</small>
+                    </div>
+                    <div class="form-group hidden">
+                        <label
+                                for="staticTicketResp" class="form-label"
+                        >{% trans 'Code report' %}</label>
+                        <input
+                                type="text" readonly
+                                class="form-control-plaintext text-danger"
+                                id="staticTicketResp"
+                        >
+                        <small class="form-text">
+                            <a
+                                    class="link-ticket-detail"
+                                    href="{% url 'TicketDetailView' code='__code__' %}"
+                            >
+                                {% trans 'Detail' %}
+                            </a>
+                        </small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button
+                            type="button" class="btn btn-secondary no-transform" data-bs-dismiss="modal"
+                    >{% trans 'Close' %}</button>
+                    <button
+                            type="submit" class="btn btn-primary no-transform"
+                    >{% trans 'Send report' %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

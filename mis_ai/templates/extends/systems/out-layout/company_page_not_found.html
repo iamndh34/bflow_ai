@@ -1,0 +1,113 @@
+{% load static i18n compress string_utils %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ ""|parsed_title_page|safe }}</title>
+    <meta name="description" content="Management Information System"/>
+
+    <link rel="shortcut icon" href="{% static 'assets/images/brand/bflow/favicon.ico' %}">
+    <link rel="icon" href="{% static 'assets/images/brand/bflow/favicon.ico' %}" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            rel="stylesheet"
+            href="//fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:400,400italic,500,500italic,700,700italic|Roboto+Mono:400,500,700&amp;display=swap"
+    >
+    <style>
+        html, body {
+            color: rgb(32, 33, 36);
+            font: 400 16px/24px "Roboto", "Google Sans", "Roboto Mono", sans-serif;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            height: 100%;
+            margin: 0;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%
+        }
+    </style>
+
+    {% compress css %}
+        <link
+                href="{% static 'vendors/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css' %}"
+                rel="stylesheet" type="text/css"
+        />
+        <link
+                href="{% static 'vendors/bootstrap@4.0.0/dist/css/bootstrap.min.css' %}"
+                rel="stylesheet" type="text/css"
+        />
+    {% endcompress %}
+
+    {% if is_ga_enabled %}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-4GDQQTC98X"></script>
+    {% endif %}
+    {% compress js %}
+        {% if is_ga_enabled %}
+            <script type="text/javascript">
+                window.dataLayer = window.dataLayer || [];
+
+                function gtag() {
+                    dataLayer.push(arguments);
+                }
+
+                gtag('js', new Date());
+
+                gtag('config', 'G-4GDQQTC98X', {
+                    'user_id': `{{ base.username_auth }} {{ base.user_id }}`,
+                });
+            </script>
+        {% endif %}
+        {% block jsHeader %}{% endblock %}
+    {% endcompress %}
+</head>
+<body>
+<div class="container-xl" style="overflow: hidden;">
+    <div class="row d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="col-xl-7 col-lg-6">
+            <div class="auth-content py-md-0 py-8">
+                <div class="row">
+                    <div class="col-xl-12 text-center">
+                        <img
+                                src="{% static 'assets/images/systems/macaroni-fatal-error.png' %}"
+                                class="img-fluid w-sm-80 w-50"
+                                alt="login"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5 col-lg-6 col-md-7 col-sm-10">
+            <div class="auth-content py-md-0 py-8">
+                <div class="w-100">
+                    <div class="row">
+                        <div class="col-xxl-9 col-xl-8 col-lg-11">
+                            <h3>{{ company_title }}</h3>
+                            <small>{{ tenant_title }}</small>
+                            <h1 class="display-4 fw-bold mb-2">404</h1>
+                            <p class="p-lg">{% trans 'Sorry, the requested page cannot be found.' %}</p>
+                            <p class="p-lg">{% trans 'Try finding with another name.' %}</p>
+                            {% if path_redirect %}
+                                <a href="{{ path_redirect }}" class="btn btn-primary mt-4">{% trans 'Return to home' %}</a>
+                            {% else %}
+                                <a href="{% url 'HomeView' %}" class="btn btn-primary mt-4">{% trans 'Return to home' %}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {% compress js %}
+        <!-- Bootstrap Core JS -->
+        <script src="{% static 'vendors/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+        <!-- // Bootstrap Core JS -->
+    {% endcompress %}
+</div>
+</body>
+</html>

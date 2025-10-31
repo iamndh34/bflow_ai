@@ -1,0 +1,160 @@
+{% load i18n %}
+
+<style>
+    /* Product Attribute Custom Styles */
+    .attribute-card {
+        border: 2px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+
+    .attribute-card.selected {
+        border-color: #0d6efd;
+        background-color: #f0f8ff;
+    }
+
+    .attribute-content {
+        display: none;
+        animation: slideDown 0.3s ease;
+    }
+
+    .attribute-content.show {
+        display: block;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .list-option-item {
+        padding: 12px;
+        background: white;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        transition: all 0.2s ease;
+    }
+
+    .list-option-item:hover {
+        border-color: #0d6efd;
+        background: #f0f8ff;
+        transform: translateX(5px);
+    }
+
+    .list-option-item input[type="radio"]:checked ~ .form-check-label {
+        color: #0d6efd;
+        font-weight: 600;
+    }
+
+    .numeric-control {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+    }
+
+    .form-range {
+        height: 8px;
+    }
+
+    .form-range::-webkit-slider-thumb {
+        width: 24px;
+        height: 24px;
+        background: #0d6efd;
+        border: 3px solid white;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        cursor: pointer;
+    }
+
+    .form-range::-moz-range-thumb {
+        width: 24px;
+        height: 24px;
+        background: #0d6efd;
+        border: 3px solid white;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        cursor: pointer;
+    }
+
+    #attribute-summary {
+        border-width: 2px;
+        background: #f0f8ff !important;
+    }
+
+    #offcanvas-product-attribute {
+        width: 500px !important;
+    }
+
+    #offcanvas-product-attribute .offcanvas-header {
+        background: linear-gradient(135deg, rgb(78 229 159) 0%, rgba(0, 180, 190, 1) 100%);
+    }
+
+    #offcanvas-product-attribute .offcanvas-header .btn-close {
+        filter: brightness(0) invert(1);
+        opacity: 0.8;
+    }
+
+    #offcanvas-product-attribute .offcanvas-header .btn-close:hover {
+        opacity: 1;
+    }
+
+    #offcanvas-product-attribute .offcanvas-body {
+        padding-bottom: 100px;
+        background: #fafbfc;
+    }
+
+    #offcanvas-save-attribute-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        left: auto;
+        width: calc(500px - 40px);
+        z-index: 1050;
+        box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+        padding: 12px 24px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .attribute-badge {
+        font-size: 10px;
+        padding: 2px 6px;
+        border-radius: 10px;
+    }
+
+    .bg-purple {
+        background-color: #6f42c1;
+        color: white;
+    }
+
+    @media (max-width: 576px) {
+        #offcanvas-product-attribute {
+            width: 100% !important;
+        }
+
+        #offcanvas-save-attribute-btn {
+            width: calc(100% - 40px);
+        }
+    }
+</style>
+
+<div data-uom-list-url='{% url 'UnitOfMeasureListAPI' %}' data-product-attribute="{% url 'ProductAttributeListAPI' pk=0 %}" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas-product-attribute" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">
+            {% trans 'Product Attributes Configuration' %}
+        </h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="row" style="overflow-y: auto; overflow-x: hidden; max-height: calc(100vh - 180px);">
+            <!-- Attributes will be dynamically inserted here by JavaScript -->
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary" id="offcanvas-save-attribute-btn">
+        <i class="fa fa-save me-2"></i>{% trans 'Save Configuration' %}
+    </button>
+</div>
+
