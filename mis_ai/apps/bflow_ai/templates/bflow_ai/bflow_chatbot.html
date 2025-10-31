@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% block header_block %}
-    <link rel="stylesheet" href="{% static 'assets/css/bflow_ai/bflow_chatbot.css' %}">
+    {% include 'extends/chatbot/chatbot-popup.css' %}
 {% endblock %}
 {% block content %}
     {% include 'extends/chatbot/chatbot-popup.html' %}
