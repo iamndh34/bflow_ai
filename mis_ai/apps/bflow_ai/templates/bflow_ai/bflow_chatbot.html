@@ -5,57 +5,6 @@
     <link rel="stylesheet" href="{% static 'assets/css/bflow_ai/bflow_chatbot.css' %}">
 {% endblock %}
 {% block content %}
-    <script id="script-url"
-            data-url-solve-question="{% url 'BFlowAIQueryGroqView' %}"
-    ></script>
-    <div class="row">
-        <div class="col-12 col-md-2 col-lg-2">
-            <div class="row">
-                <div class="col-12" hidden>
-                    <div class="form-group">
-                        <label class="form-label" for="select-ai-model">{% trans 'Select model' %}</label>
-                        <select class="form-select" id="select-ai-model" disabled readonly>
-                            <option value="0" selected>Meta llama3-70b-8192</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="form-group">
-                        <label class="form-label" for="select-app">{% trans 'Select detail app' %}</label>
-                        <select class="form-select" id="select-app">
-                            <option value="">--</option>
-                            <option value="app-account">{% trans 'Account' %}</option>
-                            <option value="app-opportunity">{% trans 'Opportunity' %}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-10 col-lg-10">
-            <div class="chat-container d-flex flex-column">
-                <!-- Messages -->
-                <div class="chat-messages">
-                    <div class="message bot d-flex align-items-center">
-{#                        bot trả lời ở đây#}
-                    </div>
-                    <div class="message user d-flex justify-content-end">
-{#                        câu hỏi ở đây#}
-                    </div>
-                </div>
-                <!-- Input -->
-                <div class="chat-input d-flex align-items-center">
-                    <textarea id="user-question" rows="3" type="text" class="form-control me-2" placeholder="{% trans 'Ask BFlow Chatbot' %}" style="resize: none;"></textarea>
-                    <button id="btn-send-message" class="btn btn-icon btn-rounded btn-primary">
-                        <span class="icon">
-                            <span class="feather-icon">
-                                <i class="fa-solid fa-arrow-up"></i>
-                            </span>
-                        </span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
     {% include 'extends/chatbot/chatbot-popup.html' %}
 {% endblock %}
 {% block js_block %}

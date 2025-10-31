@@ -181,3 +181,14 @@ class BFlowAIQueryGroqView(APIView):
             answer = chat_completion.choices[0].message.content
             return JsonResponse({'data': {'answer': answer}, 'status': 200})
         return JsonResponse({'data': {'answer': 'Bạn không phải admin. Hiện tại BFlow AI chỉ hỗ trợ user admin!'}, 'status': 200})
+
+
+class BAIAskDemo(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @mask_view()
+    def post(self, request):
+        context = request.data.get("context")
+
+        if context:
+            return JsonResponse({'data': {'answer': 'Shut up!'}, 'status': 200})
