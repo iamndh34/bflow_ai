@@ -284,26 +284,6 @@
     animation: slideInUp 0.4s ease;
 }
 
-/* AI Avatar */
-.typing-indicator .ai-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #FFB347 0%, #FF8C42 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 3px 10px rgba(255, 140, 66, 0.3);
-    animation: pulse 2s infinite;
-}
-
-.typing-indicator .ai-avatar img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-}
-
 @keyframes pulse {
     0% {
         box-shadow: 0 0 0 0 rgba(255, 140, 66, 0.7);
@@ -414,7 +394,7 @@
         border-radius: 0;
         max-width: 100%;
     }
-    
+
     .ai-chat-header {
         border-radius: 0;
     }
@@ -435,12 +415,12 @@
         top: 0;
         border-radius: 0;
     }
-    
+
     .ai-message-content {
         max-width: 85%;
         font-size: 13px;
     }
-    
+
     .ai-chat-input textarea {
         font-size: 13px;
     }
