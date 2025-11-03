@@ -5,6 +5,7 @@ from apps.bflow_ai.views import (
     BFlowAIQueryGroqView, BAIAskDemo
 )
 
+
 urlpatterns = [
     path('', BFlowAIChatbot.as_view(), name='BFlowAIChatbot'),
     # path('query-open-ai/',  BFlowAIQueryOpenAIView.as_view(), name="BFlowAIQueryOpenAIView"),

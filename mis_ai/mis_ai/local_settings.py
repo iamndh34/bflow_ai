@@ -93,11 +93,11 @@ DATABASE_NAME = 'local'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mis_ui',
-        'USER': 'haind',
-        'PASSWORD': '03112001!',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'NAME': 'bookmanagement',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '3308',
     }
 }
 

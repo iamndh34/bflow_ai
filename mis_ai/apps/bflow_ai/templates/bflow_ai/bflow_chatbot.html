@@ -4,7 +4,8 @@
 {% block header_block %}
     <style>
     body {
-        background: #1c1f23;
+        background: #F5F5F5;
+    }
     </style>
     <link rel="stylesheet" href="{% static 'assets/css/bflow_ai/chatbot-popup.css' %}">
 {% endblock %}
@@ -12,6 +13,7 @@
     <script id="bai-script-url"
             data-ask-demo-url="{% url 'BAIAskDemo' %}"
     ></script>
+    {% csrf_token %}
     {% include 'extends/chatbot/chatbot-popup.html' %}
 {% endblock %}
 {% block js_block %}

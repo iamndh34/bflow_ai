@@ -13,6 +13,9 @@ from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
+from apps.shared.utils.rag_feature import rag_feature
+
+
 # openai_client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
 
@@ -180,15 +183,54 @@ class BFlowAIQueryGroqView(APIView):
 
             answer = chat_completion.choices[0].message.content
             return JsonResponse({'data': {'answer': answer}, 'status': 200})
-        return JsonResponse({'data': {'answer': 'Bạn không phải admin. Hiện tại BFlow AI chỉ hỗ trợ user admin!'}, 'status': 200})
+        return JsonResponse(
+            {'data': {'answer': 'Bạn không phải admin. Hiện tại BFlow AI chỉ hỗ trợ user admin!'}, 'status': 200})
 
 
-class BAIAskDemo(APIView):
-    permission_classes = [IsAuthenticated]
+class BAIAskDemo(View):
+    def get(self, request, *args, **kwargs):
+        return JsonResponse({'data': {'answer': 'hello'}, 'status': 200})
 
-    @mask_view()
-    def post(self, request):
-        context = request.data.get("context")
+    def post(self, request, *args, **kwargs):
+        try:
+            # Parse JSON body
+            data = json.loads(request.body.decode("utf-8"))
+            user_input = data.get("context", "").strip()
 
-        if context:
-            return JsonResponse({'data': {'answer': 'Shut up!'}, 'status': 200})
+            # Validate input
+            if not user_input:
+                return JsonResponse({
+                    "status": 400,
+                    "message": "Thiếu tham số 'context' trong body JSON."
+                }, status=400)
+
+            # Gọi hàm RAG
+            result = rag_feature(user_input=user_input, top_k=3)
+
+            if not result:
+                return JsonResponse({
+                    "status": 404,
+                    "message": "Không tìm thấy kết quả phù hợp.",
+                    "data": None
+                }, status=404)
+
+            # Trả kết quả
+            return JsonResponse({
+                "status": 200,
+                "message": "Thành công.",
+                "data": result
+            }, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({
+                "status": 400,
+                "message": "Body phải là JSON hợp lệ."
+            }, status=400)
+
+        except Exception as e:
+            print("Lỗi API /ask:", e)
+            return JsonResponse({
+                "status": 500,
+                "message": "Lỗi server nội bộ.",
+                "error": str(e)
+            }, status=500)

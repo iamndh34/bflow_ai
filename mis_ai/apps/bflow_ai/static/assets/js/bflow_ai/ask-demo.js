@@ -1,5 +1,5 @@
 // AI Chat Functionality with jQuery
-$(document).ready(function() {
+$(document).ready(function () {
     const $chatButton = $('#aiChatButton');
     const $chatContainer = $('#aiChatContainer');
     const $chatClose = $('#aiChatClose');
@@ -9,8 +9,10 @@ $(document).ready(function() {
     const $typingIndicator = $('#typingIndicator');
     const $bai_script_url = $('#bai-script-url');
 
+    let session_key = ""
+
     // Toggle chat visibility
-    $chatButton.on('click', function() {
+    $chatButton.on('click', function () {
         $chatContainer.toggleClass('active');
         if ($chatContainer.hasClass('active')) {
             if ($chatBody.find('.is_hello').length === 0) {
@@ -25,7 +27,7 @@ $(document).ready(function() {
     });
 
     // Close chat
-    $chatClose.on('click', function() {
+    $chatClose.on('click', function () {
         $chatContainer.removeClass('active');
     });
 
@@ -43,14 +45,51 @@ $(document).ready(function() {
 
             // Hard response or Call AI API here
             hideTypingIndicator();
-            const aiResponse = 'Shut up!';
-            addMessage(aiResponse, 'ai');
-            $chatSend.prop('disabled', false);
+            let aiResponse = '';
+            if (!session_key) {
+                $.ajax({
+                    url: $bai_script_url.attr('data-ask-demo-url'),
+                    method: 'POST',
+                    data: JSON.stringify({context: message}),
+                    contentType: "application/json",
+                    processData: false,
+                    headers: {"X-CSRFToken": $('input[name="csrfmiddlewaretoken"]').val()},
+                    success: function (res) {
+                        aiResponse = `
+                        Bạn muốn tôi hỗ trợ về ${res.data.description}?
+                        <a type="button" class="mx-1 text-primary accept-btn" data-desc="${res.data.description}" data-key="${res.data.key}">Đồng ý</a>
+                        <a type="button" class="mx-1 text-danger">Hủy</a>   
+                    `;
+                        addMessage(aiResponse, 'ai');
+                        $chatSend.prop('disabled', false);
+                    },
+                    error: function (error) {
+                        console.log(error)
+                        aiResponse = error
+                        addMessage(error, 'ai');
+                        $chatSend.prop('disabled', false);
+                    }
+                })
+            } else {
+
+            }
+
         }
     }
 
+    $(document).on('click', '.accept-btn', function () {
+        const description = $(this).attr('data-desc')
+        session_key = $(this).attr('data-key')
+        addMessage('Đồng ý', 'user');
+        addMessage(`
+            Tôi sẽ hỗ trợ bạn <strong>${description}</strong>
+            <div>Nếu muốn thoát thì gõ <strong class="text-danger">Exit</strong>.</div>
+        `, 'ai');
+        console.log(session_key)
+    });
+
     // Add message to chat
-    function addMessage(content, sender, is_hello=false) {
+    function addMessage(content, sender, is_hello = false) {
         const $messageDiv = $('<div>').addClass(`ai-message ${sender}`);
         const $contentDiv = $('<div>').addClass(`ai-message-content ${is_hello ? 'is_hello' : ''}`).html(content);
 
@@ -58,7 +97,7 @@ $(document).ready(function() {
         $chatBody.append($messageDiv);
 
         // Scroll to bottom
-        $chatBody.animate({ scrollTop: $chatBody[0].scrollHeight }, 300);
+        $chatBody.animate({scrollTop: $chatBody[0].scrollHeight}, 300);
     }
 
     // Show typing indicator with enhanced animation
@@ -70,7 +109,7 @@ $(document).ready(function() {
         setTimeout(() => {
             $typingIndicator.addClass('active');
             // Smooth scroll to bottom
-            $chatBody.animate({ scrollTop: $chatBody[0].scrollHeight }, 300);
+            $chatBody.animate({scrollTop: $chatBody[0].scrollHeight}, 300);
         }, 100);
     }
 
@@ -83,18 +122,18 @@ $(document).ready(function() {
     }
 
     // Send message on button click
-    $chatSend.on('click', function() {
+    $chatSend.on('click', function () {
         sendMessage($bai_script_url.attr('data-ask-demo-url'));
     });
 
     // Auto-resize textarea
-    $chatInput.on('input', function() {
+    $chatInput.on('input', function () {
         this.style.height = 'auto';
         this.style.height = (this.scrollHeight) + 'px';
     });
 
     // Close chat on Escape key
-    $(document).on('keydown', function(e) {
+    $(document).on('keydown', function (e) {
         if (e.which === 27 && $chatContainer.hasClass('active')) {
             $chatContainer.removeClass('active');
         }
