@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap5',
     'jquery',
-    'apps.bflow_ai'
+    # apps
+    'apps.bflow_ai',
+    'apps.bflow_invoice_orc',
 ]
 
 MIDDLEWARE = [
