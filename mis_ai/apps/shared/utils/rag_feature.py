@@ -103,7 +103,7 @@ def rag_feature(user_input: str, top_k: int = 1):
     try:
         user_embedding = _model.encode([user_input])
         D, I = _index.search(np.array(user_embedding).astype('float32'), k=top_k)
-
+        print(user_input)
         results = []
         for idx, dist in zip(I[0], D[0]):
             func = functions[idx]

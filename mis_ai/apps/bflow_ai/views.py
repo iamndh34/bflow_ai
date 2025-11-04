@@ -13,6 +13,7 @@ from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
+from apps.shared.utils.rag_document import find_best, synthesize_answer
 from apps.shared.utils.rag_feature import rag_feature
 
 
@@ -206,6 +207,54 @@ class BAIAskDemo(View):
 
             # Gọi hàm RAG
             result = rag_feature(user_input=user_input, top_k=3)
+
+            if not result:
+                return JsonResponse({
+                    "status": 404,
+                    "message": "Không tìm thấy kết quả phù hợp.",
+                    "data": None
+                }, status=404)
+
+            # Trả kết quả
+            return JsonResponse({
+                "status": 200,
+                "message": "Thành công.",
+                "data": result
+            }, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({
+                "status": 400,
+                "message": "Body phải là JSON hợp lệ."
+            }, status=400)
+
+        except Exception as e:
+            print("Lỗi API /ask:", e)
+            return JsonResponse({
+                "status": 500,
+                "message": "Lỗi server nội bộ.",
+                "error": str(e)
+            }, status=500)
+
+
+class BAIAskDoc(View):
+    def post(self, request, *args, **kwargs):
+        try:
+            # Parse JSON body
+            data = json.loads(request.body.decode("utf-8"))
+            user_input = data.get("context", "").strip()
+
+            # Validate input
+            if not user_input:
+                return JsonResponse({
+                    "status": 400,
+                    "message": "Thiếu tham số 'context' trong body JSON."
+                }, status=400)
+
+            # Gọi hàm RAG
+            api_key = "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"
+            retrieved_text = find_best(user_input=user_input, top_k=3)
+            result = synthesize_answer(user_query=user_input, retrieved_texts=retrieved_text, api_key=api_key)
 
             if not result:
                 return JsonResponse({

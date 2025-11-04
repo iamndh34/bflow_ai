@@ -1,0 +1,67 @@
+Title: Hướng Dẫn Đăng Ký và Đăng Nhập Tài Khoản
+Version: 1.0
+Date: 2025-10-20
+Author: Bộ phận Hỗ Trợ Người Dùng
+Category: User Manual
+
+# Giới thiệu
+Tài khoản giúp bạn truy cập và sử dụng đầy đủ các tính năng của hệ thống.
+Bạn chỉ cần đăng ký một lần, sau đó có thể đăng nhập bất cứ lúc nào để sử dụng dịch vụ.
+
+# 1. Đăng ký tài khoản mới
+Để tạo tài khoản mới, bạn thực hiện theo các bước sau:
+
+1. Mở trang đăng ký: Chọn nút **"Đăng ký"** trên màn hình chính.
+2. Nhập thông tin cá nhân:
+   - Họ và tên
+   - Địa chỉ email (sử dụng email thật để nhận thông báo)
+   - Mật khẩu (ít nhất 8 ký tự, có chữ và số)
+3. Xác nhận lại mật khẩu.
+4. Nhấn nút **"Tạo tài khoản"**.
+5. Hệ thống sẽ gửi email xác nhận đến hộp thư của bạn. Hãy mở email và nhấn vào liên kết xác nhận để hoàn tất.
+
+> Lưu ý: Nếu bạn không nhận được email, hãy kiểm tra thư mục Spam hoặc Junk Mail.
+
+# 2. Đăng nhập
+Sau khi đã có tài khoản, bạn có thể đăng nhập theo các bước:
+
+1. Mở ứng dụng hoặc trang web.
+2. Chọn nút **"Đăng nhập"**.
+3. Nhập email và mật khẩu đã đăng ký.
+4. Nhấn nút **"Đăng nhập"** để vào hệ thống.
+
+> Nếu thông tin chính xác, bạn sẽ được chuyển đến trang chủ.  
+> Nếu nhập sai mật khẩu, hệ thống sẽ báo lỗi “Sai email hoặc mật khẩu”.
+
+# 3. Quên mật khẩu
+Nếu bạn quên mật khẩu, hãy làm theo hướng dẫn sau:
+
+1. Tại màn hình đăng nhập, chọn **"Quên mật khẩu?"**.
+2. Nhập địa chỉ email bạn đã dùng để đăng ký.
+3. Hệ thống sẽ gửi một email chứa liên kết đặt lại mật khẩu.
+4. Nhấn vào liên kết trong email và nhập mật khẩu mới.
+
+> Gợi ý: Chọn mật khẩu mạnh — có cả chữ hoa, chữ thường và số.
+
+# 4. Đăng xuất
+Khi bạn không còn sử dụng hệ thống, nên đăng xuất để đảm bảo an toàn.
+
+1. Nhấn vào tên tài khoản hoặc biểu tượng người dùng ở góc trên cùng.
+2. Chọn **"Đăng xuất"**.
+3. Sau khi đăng xuất, bạn sẽ quay về màn hình chính.
+
+# 5. Bảo mật tài khoản
+- Không chia sẻ mật khẩu với người khác.
+- Không lưu mật khẩu trên máy công cộng.
+- Nếu nghi ngờ tài khoản bị xâm nhập, hãy đổi mật khẩu ngay.
+- Chỉ đăng nhập vào trang web hoặc ứng dụng chính thức của hệ thống.
+
+# 6. Hỗ trợ
+Nếu gặp khó khăn khi đăng ký hoặc đăng nhập, bạn có thể liên hệ:
+- Email: support@myapp.com  
+- Điện thoại: 0123-456-789  
+- Thời gian hỗ trợ: 8:00 – 17:00 (Thứ 2 đến Thứ 6)
+
+# Kết luận
+Việc đăng ký và đăng nhập tài khoản giúp bạn sử dụng dịch vụ một cách an toàn và tiện lợi hơn.
+Hãy bảo vệ thông tin cá nhân của bạn và luôn đăng xuất sau khi sử dụng trên thiết bị lạ.

@@ -55,11 +55,15 @@ $(document).ready(function () {
                     processData: false,
                     headers: {"X-CSRFToken": $('input[name="csrfmiddlewaretoken"]').val()},
                     success: function (res) {
-                        aiResponse = `
-                        Bạn muốn tôi hỗ trợ về ${res.data.description}?
-                        <a type="button" class="mx-1 text-primary accept-btn" data-desc="${res.data.description}" data-key="${res.data.key}">Đồng ý</a>
-                        <a type="button" class="mx-1 text-danger">Hủy</a>   
-                    `;
+                        if (res.data.distance >= 60) {
+                            aiResponse = "Cung cấp chi tiết yêu cầu của bạn hơn...."
+                        } else {
+                            aiResponse = `
+                            Bạn muốn tôi hỗ trợ về ${res.data.description}?
+                            <a type="button" class="mx-1 text-primary accept-btn" data-desc="${res.data.description}" data-key="${res.data.key}">Đồng ý</a>
+                            <a type="button" class="mx-1 text-danger exit-btn">Hủy</a>   
+                            `;
+                        }
                         addMessage(aiResponse, 'ai');
                         $chatSend.prop('disabled', false);
                     },
@@ -71,11 +75,49 @@ $(document).ready(function () {
                     }
                 })
             } else {
-
+                if (message.toLowerCase() === 'exit') {
+                    addMessage('Thoát chức năng AI Document', 'ai')
+                    session_key = ""
+                    $chatSend.prop('disabled', false);
+                } else {
+                    showTypingIndicator();
+                    $.ajax({
+                        url: $bai_script_url.attr('data-ask-doc-url'),
+                        method: 'POST',
+                        data: JSON.stringify({context: message}),
+                        contentType: "application/json",
+                        processData: false,
+                        headers: {"X-CSRFToken": $('input[name="csrfmiddlewaretoken"]').val()},
+                        success: function (res) {
+                            console.log(res)
+                            aiResponse = `
+                                ${res.data}
+                                <a type="button" class="text-secondary float-end exit-btn">Thoát</a>
+                            `;
+                            setTimeout(() => {
+                                hideTypingIndicator();
+                                addMessage(aiResponse, 'ai');
+                            }, 1000);
+                            $chatSend.prop('disabled', false);
+                        },
+                        error: function (error) {
+                            console.log(error)
+                            aiResponse = error
+                            addMessage(error, 'ai');
+                            $chatSend.prop('disabled', false);
+                        }
+                    })
+                }
             }
 
         }
     }
+
+    $(document).on('click', '.exit-btn', function () {
+        addMessage('Thoát chức năng AI Document', 'ai')
+        session_key = ""
+        $chatSend.prop('disabled', false);
+    })
 
     $(document).on('click', '.accept-btn', function () {
         const description = $(this).attr('data-desc')
@@ -83,7 +125,7 @@ $(document).ready(function () {
         addMessage('Đồng ý', 'user');
         addMessage(`
             Tôi sẽ hỗ trợ bạn <strong>${description}</strong>
-            <div>Nếu muốn thoát thì gõ <strong class="text-danger">Exit</strong>.</div>
+            <a type="button" class="text-secondary exit-btn">Thoát</a>
         `, 'ai');
         console.log(session_key)
     });
@@ -163,7 +205,7 @@ $(document).ready(function () {
                     showTypingIndicator();
                     setTimeout(() => {
                         hideTypingIndicator();
-                        addMessage(`Liên hệ mới đã được tạo thành công 🎉! Mã Liên hệ: ${data?.['code']}`, 'ai');
+                        addMessage(`Liên hệ mới đã được tạo thành công! Mã Liên hệ: ${data?.['code']}`, 'ai');
                     }, 1000);
                 }
             },
@@ -172,7 +214,7 @@ $(document).ready(function () {
                 showTypingIndicator();
                 setTimeout(() => {
                     hideTypingIndicator();
-                    addMessage(`Không thể thêm liên hệ mới 😭! Chi tiết lỗi: ${JSON.stringify(errs.data.errors)}`, 'ai');
+                    addMessage(`Không thể thêm liên hệ mới! Chi tiết lỗi: ${JSON.stringify(errs.data.errors)}`, 'ai');
                 }, 1000);
             })
     })

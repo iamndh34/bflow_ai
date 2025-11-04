@@ -12,6 +12,7 @@
 {% block content %}
     <script id="bai-script-url"
             data-ask-demo-url="{% url 'BAIAskDemo' %}"
+            data-ask-doc-url="{% url 'BAIAskDoc' %}"
     ></script>
     {% csrf_token %}
     {% include 'extends/chatbot/chatbot-popup.html' %}
