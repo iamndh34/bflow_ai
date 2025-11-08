@@ -1,0 +1,108 @@
+{% load static i18n %}
+<div class="container pb-5">
+    <div class="input-group input-group-sm mb-5 shadow-sm">
+        <input type="file" class="form-control" id="inputInvoicePdf" aria-describedby="inputInvoicePdf"
+               aria-label="Upload">
+        <button class="btn btn-outline-secondary" type="button" id="inputInvoicePdfBtn">Read invoice from pdf</button>
+    </div>
+
+    <form id="invoice-form">
+        <h2 class="momo-trust-font mb-3">Invoice</h2>
+        <div class="d-flex gap-3 justify-content-between bg-white p-4 mb-2 shadow-sm rounded">
+            <div class="w-100">
+                <div class="mb-3">
+                    <label for="serial-number-input" class="form-label fw-bold">Serial number</label>
+                    <input type="text" class="form-control form-control-sm" id="serial-number-input"
+                           placeholder="VD: 1ABCXYZ">
+                </div>
+                <div class="mb-3">
+                    <label for="invoice-number-input" class="form-label fw-bold  ">Invoice number</label>
+                    <input type="text" class="form-control form-control-sm" id="invoice-number-input"
+                           placeholder="VD: 0000010">
+                </div>
+                <div class="mb-3">
+                    <label for="payment-method-input" class="form-label fw-bold  ">Payment method</label>
+                    <input type="text" class="form-control form-control-sm" id="payment-method-input"
+                           placeholder="VD: TM/CK">
+                </div>
+            </div>
+            <div class="w-100">
+                <div class="mb-3">
+                    <label for="date-input" class="form-label fw-bold">Date</label>
+                    <input type="date" class="form-control form-control-sm" id="date-input"
+                           placeholder="VD: 18/10/2025">
+                </div>
+                <div class="mb-3">
+                    <label for="tax-code-input" class="form-label fw-bold  ">CQT Code</label>
+                    <input type="text" class="form-control form-control-sm" id="tax-code-input"
+                           placeholder="VD: M1-25-MNZLR-00000001968">
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-3 justify-content-between bg-white p-4 mb-2 shadow-sm rounded">
+            <div class="w-100">
+                <div class="mb-3">
+                    <label for="seller-company-input" class="form-label fw-bold">Company</label>
+                    <input type="text" class="form-control form-control-sm" id="seller-company-input"
+                           placeholder="VD: CTY ABC">
+                </div>
+                <div class="mb-3">
+                    <label for="seller-tax-input" class="form-label fw-bold  ">Tax code</label>
+                    <input type="text" class="form-control form-control-sm" id="seller-tax-input"
+                           placeholder="VD: 0312533500">
+                </div>
+            </div>
+            <div class="w-100">
+                <div class="mb-3">
+                    <label for="buyer-company-input" class="form-label fw-bold">Company Buyer</label>
+                    <input type="text" class="form-control form-control-sm" id="buyer-company-input"
+                           placeholder="VD: CTY XYZ">
+                </div>
+                <div class="mb-3">
+                    <label for="buyer-tax-input" class="form-label fw-bold  ">Tax code</label>
+                    <input type="text" class="form-control form-control-sm" id="buyer-tax-input"
+                           placeholder="VD: 0312533500">
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-3 justify-content-between bg-white p-4 shadow-sm rounded">
+            <div class="w-100">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h4 class="momo-trust-font">Products</h4>
+                    <a id="add-item-btn" type="button"><i class="fa-solid fa-file-circle-plus fs-4"></i></a>
+                </div>
+                <table id="invoiceItemsTable" class="table table-hover">
+                    <thead class="table-primary">
+                    <tr>
+                        <th>Product</th>
+                        <th>Unit</th>
+                        <th>Quantity</th>
+                        <th>Unit price</th>
+                        <th>Amount</th>
+                        <th>Discount</th>
+                        <th>VAT Rate</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="btn-group gap-1 float-end mt-4">
+            <button id="clear-storage-btn" type="submit" class="btn btn-secondary btn-sm rounded-pill shadow" style="min-width: 100px">Clear
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm rounded-pill shadow" style="min-width: 100px">Save
+            </button>
+        </div>
+    </form>
+    <div id="loading-overlay"
+         class="d-none position-fixed top-0 start-0 w-100 h-100 bg-white bg-opacity-75 d-flex justify-content-center align-items-center"
+         style="z-index: 9999;">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>

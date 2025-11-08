@@ -1,3 +1,5 @@
+import json
+
 from sentence_transformers import SentenceTransformer
 import numpy as np
 import faiss
@@ -83,17 +85,53 @@ functions = [
     }
 ]
 
+# Product list
+product_list = [
+    {"code": "M001", "name": "7 Up", "selected": False},
+    {"code": "M002", "name": "Sting", "selected": False},
+    {"code": "M003", "name": "Tiger Bạc Lon Lớn 330ml", "selected": False},
+    {"code": "M004", "name": "Khăn lạnh", "selected": False},
+    {"code": "M005", "name": "Hàu nướng phô mai", "selected": False},
+    {"code": "M006", "name": "Nghêu hấp sả", "selected": False},
+    {"code": "M007", "name": "Bê thui (bò tơ) (thăn, quế, bắp, gù)", "selected": False},
+    {"code": "M008", "name": "Bánh tráng nướng", "selected": False},
+    {"code": "M009", "name": "Gỏi bò tơ bóp thấu", "selected": False},
+    {"code": "M010", "name": "Bạch tuộc nướng sa tế", "selected": False},
+    {"code": "M011", "name": "Rau thêm Bê thui", "selected": False},
+    {"code": "M012", "name": "Miến xào hải sản", "selected": False},
+    {"code": "M013", "name": "Cơm chiên hải sản", "selected": False},
+    {"code": "M014", "name": "Mực chiên nước mắm", "selected": False},
+    {"code": "M015", "name": "Tôm nướng muối ớt", "selected": False},
+    {"code": "M016", "name": "Cá lóc nướng trui", "selected": False},
+    {"code": "M017", "name": "Lẩu thái hải sản", "selected": False},
+    {"code": "M018", "name": "Ốc hương nướng mọi", "selected": False},
+    {"code": "M019", "name": "Sò điệp nướng mỡ hành", "selected": False},
+    {"code": "M020", "name": "Tàu hủ chiên giòn", "selected": False},
+    {"code": "M021", "name": "Rau muống xào tỏi", "selected": False},
+    {"code": "M022", "name": "Canh chua cá bông lau", "selected": False}
+]
+
 # --- Khởi tạo model và FAISS index chỉ một lần ---
 print("Đang load model SentenceTransformer...")
 _model = SentenceTransformer('bkai-foundation-models/vietnamese-bi-encoder')
 print("Model loaded thành công!")
 
+# Embedding feature
 _texts = [f"{f['name_vi']} {f['description']} {' '.join(f['keywords'])}" for f in functions]
 _embeddings = _model.encode(_texts)
 _dimension = _embeddings.shape[1]
 _index = faiss.IndexFlatL2(_dimension)
 _index.add(np.array(_embeddings).astype('float32'))
-print("FAISS index đã sẵn sàng!")
+print("FAISS index đã sẵn sàng cho features!")
+
+# Embedding productions
+_texts = [f"{f['code']} {f['name']}" for f in product_list]
+_embeddings = _model.encode(_texts)
+_dimension = _embeddings.shape[1]
+_index = faiss.IndexFlatL2(_dimension)
+_index.add(np.array(_embeddings).astype('float32'))
+print("FAISS index đã sẵn sàng cho products!")
+
 
 # --- Hàm chính ---
 def rag_feature(user_input: str, top_k: int = 1):
@@ -122,3 +160,46 @@ def rag_feature(user_input: str, top_k: int = 1):
     except Exception as e:
         print("Lỗi RAG:", e)
         return None
+
+
+def rag_products(product_list_input, top_k=1, threshold=0.6):
+    # Reset flag
+    for p in product_list:
+        p["selected"] = False
+        p["unit"] = ""
+        p["quantity"] = 0
+        p["unit_price"] = 0
+        p["vat_amount"] = 0
+        p["vat_rate"] = "0"
+        p["similarity"] = 0.0
+
+    # Dò tìm match
+    for item in product_list_input:
+        name = item.get("name", "").strip()
+        if not name:
+            continue
+
+        user_emb = _model.encode([name], normalize_embeddings=True)
+        D, I = _index.search(np.array(user_emb).astype("float32"), k=top_k)
+
+        best_idx = int(I[0][0])
+        best_sim = float(D[0][0])
+        best_product = product_list[best_idx]
+
+        print(f"\n🔹 OCR: {name}")
+        print(f"- Match: {best_product['name']} (similarity={best_sim:.4f})")
+
+        if best_sim >= threshold:
+            best_product["selected"] = True
+            best_product["unit"] = item.get("unit", "")
+            best_product["quantity"] = item.get("quantity", 0)
+            best_product["unit_price"] = item.get("unit_price", 0)
+            best_product["vat_amount"] = item.get("vat_amount", 0)
+            best_product["vat_rate"] = item.get("vat_rate", "0")
+            best_product["similarity"] = round(best_sim, 4)
+
+    json_output = json.dumps(product_list, ensure_ascii=False, indent=4)
+    print("\n Danh sách product_list sau khi match:")
+    print(json_output)
+
+    return json_output

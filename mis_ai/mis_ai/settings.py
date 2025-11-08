@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'apps.bflow_invoice_orc',
 ]
 
+OPENAI_API_KEY= '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'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

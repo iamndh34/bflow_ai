@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% block header_block %}
+    <style>
+        body {
+            background: #F5F5F5;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'assets/css/bflow_ai/chatbot-popup.css' %}">
+{% endblock %}
+{% block content %}
+    <script id="bai-script-url"
+            data-ask-demo-url="{% url 'BAIOcrInvoice' %}"
+            data-ask-rag-product-url="{% url 'BAIOcrInvoiceRagProducts' %}"
+    ></script>
+    {% csrf_token %}
+    {% include 'extends/invoice/invoice_form.html' %}
+{% endblock %}
+{% block js_block %}
+    <script src="{% static 'assets/js/bflow_ai/invoice_ocr.js' %}"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+{% endblock %}
