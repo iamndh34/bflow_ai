@@ -12,7 +12,6 @@ from apps.shared import BreadcrumbView
 urlpatterns = [
     path('django-admin/', admin.site.urls),
     path('bflow-ai/', include('apps.bflow_ai.urls')),
-    path('bflow_invoice_orc/', include('apps.bflow_invoice_orc.urls')),
 ]
 
 urlpatterns += static('django-admin-media/', document_root=settings.MEDIA_ROOT)

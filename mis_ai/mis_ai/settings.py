@@ -40,12 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap5',
     'jquery',
-    # apps
-    'apps.bflow_ai',
-    'apps.bflow_invoice_orc',
+    'apps.bflow_ai'
 ]
-
-OPENAI_API_KEY= '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'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
