@@ -27,7 +27,7 @@ _model = SentenceTransformer('bkai-foundation-models/vietnamese-bi-encoder')
 print("Model loaded thành công!")
 
 _texts = [
-    f"Tài khoản {d['AccountNumber']}, Tên tiếng việt {d['VietnameseName']}, tên tiếng anh {d['EnglishName']}"
+    f"Tài khoản {d['AccountNumber']}, Tên tiếng việt {d['VietnameseName']}, tên tiếng anh {d['EnglishName']}, Ý nghĩa {d['Meaning']}, Sử dụng {d['Usage']}"
     for d in data_json]
 _embeddings = _model.encode(_texts)
 _dimension = _embeddings.shape[1]
