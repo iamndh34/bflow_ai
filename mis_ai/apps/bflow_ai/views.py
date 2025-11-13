@@ -17,9 +17,7 @@ from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
-from apps.shared.utils.rag_document import find_best, synthesize_answer
-from apps.shared.utils.rag_feature import RAGFeature, RAGProduct
-from apps.shared.utils.rag_accounting import rag_accounting
+from apps.shared.utils.rag_utils import RAGFeature, RAGProduct, RAGAccounting, RAGDocument
 from apps.shared.utils.invoice_ocr import convert_json
 
 
@@ -259,8 +257,8 @@ class BAIAskDoc(View):
 
             # Gọi hàm RAG
             api_key = settings.OPENAI_API_KEY
-            retrieved_text = find_best(user_input=user_input, top_k=3)
-            result = synthesize_answer(user_query=user_input, retrieved_texts=retrieved_text, api_key=api_key)
+            retrieved_text = RAGDocument.find_best(user_input=user_input, top_k=3)
+            result = RAGDocument.synthesize_answer(user_query=user_input, retrieved_texts=retrieved_text, api_key=api_key)
 
             if not result:
                 return JsonResponse({
@@ -362,7 +360,7 @@ class BAIAccountingApi(View):
             if not user_input:
                 return JsonResponse({"status": 400, "message": "Thiếu tham số 'context' trong body JSON."}, status=400)
 
-            result = rag_accounting(user_input=user_input, top_k=5)
+            result = RAGAccounting.rag_accounting(user_input=user_input, top_k=5)
 
             if not result:
                 return JsonResponse({"status": 200, "message": "Không tìm thấy kết quả phù hợp.", "data": None}, status=200)
