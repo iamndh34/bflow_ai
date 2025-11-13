@@ -27,7 +27,7 @@ _model = SentenceTransformer('bkai-foundation-models/vietnamese-bi-encoder')
 print("Model loaded thành công!")
 
 _texts = [
-    f"{d['AccountNumber']} {d['VietnameseName']} {d['EnglishName']} {d['Meaning']} {d['Usage']} {d['CorrespondingAccounts']}"
+    f"Tài khoản {d['AccountNumber']}, Tên tiếng việt {d['VietnameseName']}, tên tiếng anh {d['EnglishName']}"
     for d in data_json]
 _embeddings = _model.encode(_texts)
 _dimension = _embeddings.shape[1]
@@ -36,7 +36,7 @@ _index.add(np.array(_embeddings).astype('float32'))
 print("FAISS index đã sẵn sàng cho features!")
 
 
-def rag_accounting(user_input, top_k=1, threshold=50):
+def rag_accounting(user_input, top_k=1, threshold=80):
     try:
         user_embedding = _model.encode([user_input])
         D, I = _index.search(np.array(user_embedding).astype('float32'), k=top_k)

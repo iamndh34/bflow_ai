@@ -16,7 +16,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
 from apps.shared.utils.rag_document import find_best, synthesize_answer
-from apps.shared.utils.rag_feature import rag_feature, rag_products
+from apps.shared.utils.rag_feature import RAGFeature, RAGProduct
 from apps.shared.utils.rag_accounting import rag_accounting
 from apps.shared.utils.invoice_ocr import convert_json
 
@@ -210,7 +210,7 @@ class BAIAskDemo(View):
                 }, status=400)
 
             # Gọi hàm RAG
-            result = rag_feature(user_input=user_input, top_k=3)
+            result = RAGFeature.rag_feature(user_input=user_input, top_k=3)
 
             if not result:
                 return JsonResponse({
@@ -326,7 +326,7 @@ class BAIRagProduct(View):
             if not data or not isinstance(data, list):
                 return JsonResponse({'error': 'Danh sách rỗng hoặc không hợp lệ!'}, status=400)
 
-            result = rag_products(data, top_k=1, threshold=0.5)
+            result = RAGProduct.rag_products(data, top_k=1, threshold=0.5)
 
             return JsonResponse({'data': {'result': result}}, status=200)
 
@@ -365,7 +365,7 @@ class BAIAccountingApi(View):
                 }, status=400)
 
             # Gọi hàm RAG
-            result = rag_accounting(user_input=user_input, top_k=1)
+            result = rag_accounting(user_input=user_input, top_k=5)
 
             if not result:
                 return JsonResponse({
