@@ -90,16 +90,16 @@ API_DOMAIN = 'http://127.0.0.1:8000/api/'
 
 DATABASE_NAME = 'local'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bookmanagement',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '3308',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'bookmanagement',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': 'localhost',
+#         'PORT': '3308',
+#     }
+# }
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 CACHES = {

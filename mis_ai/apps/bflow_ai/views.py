@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 import json
 from django.http import JsonResponse
@@ -14,7 +16,9 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
 from apps.shared.utils.rag_document import find_best, synthesize_answer
-from apps.shared.utils.rag_feature import rag_feature
+from apps.shared.utils.rag_feature import rag_feature, rag_products
+from apps.shared.utils.rag_accounting import rag_accounting
+from apps.shared.utils.invoice_ocr import convert_json
 
 
 # openai_client = OpenAI(api_key=settings.OPENAI_API_KEY)
@@ -252,7 +256,7 @@ class BAIAskDoc(View):
                 }, status=400)
 
             # Gọi hàm RAG
-            api_key = "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"
+            api_key = settings.OPENAI_API_KEY
             retrieved_text = find_best(user_input=user_input, top_k=3)
             result = synthesize_answer(user_query=user_input, retrieved_texts=retrieved_text, api_key=api_key)
 
@@ -264,6 +268,113 @@ class BAIAskDoc(View):
                 }, status=404)
 
             # Trả kết quả
+            return JsonResponse({
+                "status": 200,
+                "message": "Thành công.",
+                "data": result
+            }, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({
+                "status": 400,
+                "message": "Body phải là JSON hợp lệ."
+            }, status=400)
+
+        except Exception as e:
+            print("Lỗi API /ask:", e)
+            return JsonResponse({
+                "status": 500,
+                "message": "Lỗi server nội bộ.",
+                "error": str(e)
+            }, status=500)
+
+
+class BAIOcrInvoice(View):
+    def get(self, request, *args, **kwargs):
+        result = convert_json()
+        return JsonResponse({'data': {'result': result}, 'status': 200})
+
+    def post(self, request, *args, **kwargs):
+        """
+        Nhận file PDF từ AJAX và lưu tạm vào thư mục /media/invoices/
+        """
+        uploaded_file = request.FILES.get('invoice_pdf')
+
+        if not uploaded_file:
+            return JsonResponse({'error': 'Không có file được upload'}, status=400)
+
+        upload_dir = os.path.join(settings.MEDIA_ROOT, 'statics/invoices')
+        os.makedirs(upload_dir, exist_ok=True)
+
+        file_path = os.path.join(upload_dir, uploaded_file.name)
+
+        with open(file_path, 'wb+') as destination:
+            for chunk in uploaded_file.chunks():
+                destination.write(chunk)
+
+        print(f"File đã được lưu tại: {file_path}")
+
+        result = convert_json(file_path)
+        return JsonResponse({'data': {'result': result}, 'status': 200})
+
+class BAIRagProduct(View):
+    def post(self, request, *args, **kwargs):
+        try:
+            body_unicode = request.body.decode('utf-8')
+            data = json.loads(body_unicode)
+
+            if not data or not isinstance(data, list):
+                return JsonResponse({'error': 'Danh sách rỗng hoặc không hợp lệ!'}, status=400)
+
+            result = rag_products(data, top_k=1, threshold=0.5)
+
+            return JsonResponse({'data': {'result': result}}, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Dữ liệu gửi lên không phải JSON hợp lệ!'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+class BAIOcrInvoiceView(View):
+    @mask_view(
+        template='bflow_ai/bflow_invoice_ocr.html',
+    )
+    def get(self, request, *args, **kwargs):
+        return {}, status.HTTP_200_OK
+
+# Accounting
+class BAIAccounting(View):
+    @mask_view(
+        template='bflow_ai/bflow_accounting.html',
+    )
+    def get(self, request, *args, **kwargs):
+        return {}, status.HTTP_200_OK
+
+class BAIAccountingApi(View):
+    def post(self, request, *args, **kwargs):
+        try:
+            # Parse JSON body
+            data = json.loads(request.body.decode("utf-8"))
+            user_input = data.get("context", "").strip()
+
+            # Validate input
+            if not user_input:
+                return JsonResponse({
+                    "status": 400,
+                    "message": "Thiếu tham số 'context' trong body JSON."
+                }, status=400)
+
+            # Gọi hàm RAG
+            result = rag_accounting(user_input=user_input, top_k=1)
+
+            if not result:
+                return JsonResponse({
+                    "status": 200,
+                    "message": "Không tìm thấy kết quả phù hợp.",
+                    "data": None
+                }, status=200)
+
+            print(result)
             return JsonResponse({
                 "status": 200,
                 "message": "Thành công.",

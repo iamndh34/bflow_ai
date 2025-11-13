@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% block header_block %}
+    <style>
+    body {
+        background: #F5F5F5;
+    }
+    </style>
+    <link rel="stylesheet" href="{% static 'assets/css/bflow_ai/chatbot-popup.css' %}">
+{% endblock %}
+{% block content %}
+    <h2>Accounting</h2>
+    <script id="bai-script-url"
+            data-ask-url="{% url 'BAIAccountingApi' %}"
+    ></script>
+    {% csrf_token %}
+    {% include 'extends/chatbot/chatbot-popup.html' %}
+{% endblock %}
+{% block js_block %}
+    <script src="{% static 'assets/js/bflow_ai/ask-accounting.js' %}"></script>
+    <script src="{% static 'assets/js/bflow_ai/bflow_chatbot_main.js' %}"></script>
+{% endblock %}

@@ -262,10 +262,15 @@ def convert_json(pdf_path):
         result = synthesize_answer(
             output["pages"][0],
             output["pages"][0],
-            api_key="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"
+            # api_key="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"
         )
-        print(result)
+        if result is None:
+            print("[Info] GPT trả về None, sẽ sử dụng dữ liệu gốc.")
+            result = json.dumps(output, ensure_ascii=False, indent=2)
+        else:
+            print(result)
         return result
     except Exception as e:
-        print(f"Lỗi khi synthesize_answer: {e}")
+        print(f"[Warning] Lỗi khi synthesize_answer: {e}")
+        # Trả về JSON gốc thay vì dừng process
         return json.dumps(output, ensure_ascii=False, indent=2)
