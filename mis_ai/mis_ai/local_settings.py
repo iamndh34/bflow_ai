@@ -138,3 +138,12 @@ ZOOM_ACCOUNT_ID = 'qyykpEHjSli4Bv-64WY7gQ'
 MONGO_URI = "mongodb://localhost:27017"
 OPENAI_API_KEY = "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"
 GROQ_API_KEY = "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"
+
+# Chỉ cho dev, localhost:8001
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8002",
+#     "http://127.0.0.1:8002",
+# ]
+
+# Nếu muốn cho phép tất cả (chỉ dev)
+CORS_ALLOW_ALL_ORIGINS = True

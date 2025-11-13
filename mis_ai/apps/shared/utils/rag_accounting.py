@@ -36,7 +36,7 @@ _index.add(np.array(_embeddings).astype('float32'))
 print("FAISS index đã sẵn sàng cho features!")
 
 
-def rag_accounting(user_input, top_k=1, threshold=80):
+def rag_accounting(user_input, top_k=1, threshold=50):
     try:
         user_embedding = _model.encode([user_input])
         D, I = _index.search(np.array(user_embedding).astype('float32'), k=top_k)

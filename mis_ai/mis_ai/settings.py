@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap5',
     'jquery',
+    'corsheaders',
     # apps
     'apps.bflow_ai',
     'apps.bflow_invoice_orc',
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
 # OPENAI_API_KEY= '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'
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # phải để trước CommonMiddleware
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -187,3 +189,16 @@ LANGUAGE_CHOICE = (
 )
 
 LANGUAGE_CHOICE_CODE = [item[0] for item in LANGUAGE_CHOICE]
+
+# Chỉ cho dev, localhost:8001
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8002",
+    "http://127.0.0.1:8002",
+]
+
+# Nếu muốn cho phép tất cả (chỉ dev)
+# CORS_ALLOW_ALL_ORIGINS = True
+
+# Cho phép cookies nếu cần
+CORS_ALLOW_CREDENTIALS = True
+

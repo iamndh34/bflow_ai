@@ -3,7 +3,9 @@ import os
 import numpy as np
 import json
 from django.http import JsonResponse
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 from groq import Groq
 from numpy.linalg import norm
 # from openai import OpenAI
@@ -350,47 +352,25 @@ class BAIAccounting(View):
     def get(self, request, *args, **kwargs):
         return {}, status.HTTP_200_OK
 
+@method_decorator(csrf_exempt, name='dispatch')
 class BAIAccountingApi(View):
     def post(self, request, *args, **kwargs):
         try:
-            # Parse JSON body
             data = json.loads(request.body.decode("utf-8"))
             user_input = data.get("context", "").strip()
 
-            # Validate input
             if not user_input:
-                return JsonResponse({
-                    "status": 400,
-                    "message": "Thiếu tham số 'context' trong body JSON."
-                }, status=400)
+                return JsonResponse({"status": 400, "message": "Thiếu tham số 'context' trong body JSON."}, status=400)
 
-            # Gọi hàm RAG
             result = rag_accounting(user_input=user_input, top_k=5)
 
             if not result:
-                return JsonResponse({
-                    "status": 200,
-                    "message": "Không tìm thấy kết quả phù hợp.",
-                    "data": None
-                }, status=200)
+                return JsonResponse({"status": 200, "message": "Không tìm thấy kết quả phù hợp.", "data": None}, status=200)
 
-            print(result)
-            return JsonResponse({
-                "status": 200,
-                "message": "Thành công.",
-                "data": result
-            }, status=200)
+            return JsonResponse({"status": 200, "message": "Thành công.", "data": result}, status=200)
 
         except json.JSONDecodeError:
-            return JsonResponse({
-                "status": 400,
-                "message": "Body phải là JSON hợp lệ."
-            }, status=400)
-
+            return JsonResponse({"status": 400, "message": "Body phải là JSON hợp lệ."}, status=400)
         except Exception as e:
             print("Lỗi API /ask:", e)
-            return JsonResponse({
-                "status": 500,
-                "message": "Lỗi server nội bộ.",
-                "error": str(e)
-            }, status=500)
+            return JsonResponse({"status": 500, "message": "Lỗi server nội bộ.", "error": str(e)}, status=500)
